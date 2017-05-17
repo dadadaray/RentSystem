@@ -223,6 +223,7 @@ function getCity() {
             }
         });
     }
+
 //解析定位错误信息
 function onError(data) {
     document.getElementById('tip').innerHTML = '定位失败';
