@@ -23,8 +23,7 @@ body{color:#535353;font-size:12px;font-family: "arial","微软雅黑";background
 	-moz-transform:rotate(360deg);
 	-webkit-transform:rotate(360deg);
 	-o-transform:rotate(360deg);
-	border-color:rgba(0,0,0,0);
-}
+	border-color:rgba(0,0,0,0);}
 .clock{display:block;}
 #circle:hover {border-color:rgba(255,255,255,0.6);background-color:	#6bc30d;}
 #circle:hover .clock{display:block;}
