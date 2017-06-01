@@ -11,6 +11,9 @@ class NameForm(Form):
     name = StringField('What is your name',validators=[Required()])
     submit = SubmitField('Submit')
 
+@app.route('/rent.csv')
+def findcsv():
+    return render_template("rent.csv")
 
 @app.route('/')
 def hello_world():
