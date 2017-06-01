@@ -56,7 +56,7 @@ function takeSubway(radio) {
 function importRentInfo() {
     var wl = document.getElementById("work-location").value
     if (wl) {
-        var file = "rent.csv"
+        var file = "static/rent.csv"
         loadRentLocationByFile(file);
     } else {
         alert("工作地点为空，请填上")
