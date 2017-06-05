@@ -24,23 +24,25 @@ def hello_world():
 def index():
     return 'index'
 
-@app.route("/login")
-def login():
-    return 'index'
+@app.route("/denglu")
+def denglu():
+    return render_template("login.html")
+
+@app.route("/zhuce")
+def zhuce():
+    return render_template("register.html")
 
 @app.route("/register", methods=['POST','GET'])
 def register():
-    #error = None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         repw = request.form['prePassword']
-
-        print("username:%s password:%s repw:%s" % (username,password,repw))
         user = User(userName=username,password=password)
         DB = BaseDB()
         DB.insert_into_table(user)
-    return render_template('register.html')
+
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
