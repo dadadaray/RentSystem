@@ -119,11 +119,9 @@ class BaseDB(object):
    创建日期：2017/6/01
    最后修改日期：2017/6/01
    '''
-    def search_by_param(self, table_name, param_name, params):
+    def search_by_param(self, table_name,param):
         try:
-            #params是列表
-            rule = and_(*[table_name.param_name.like(params) for param in params])
-            obj = self.session.query(table_name).filter(rule).first()
+            obj = self.session.query(table_name).filter(table_name.userName == param).first()
             return obj
         except Exception as e:
             print("wrong:",e)
