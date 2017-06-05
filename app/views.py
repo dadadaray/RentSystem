@@ -23,17 +23,15 @@ def hello_world():
 def index():
     return 'index'
 
-@app.route("/login", methods=['POST','GET'])
+@app.route("/login", methods=['GET'])
 def login():
-    error = None
-    if request.method == 'POST':
-        username = request.form['username']
+    return render_template('login.html')
 
 
 
-@app.route("/register")
+@app.route("/register", methods=['GET'])
 def register():
-        return render_template('sign.html')
+        return render_template('register.html')
 
 
 if __name__ == '__main__':
