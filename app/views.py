@@ -27,6 +27,14 @@ def index():
 def login():
     return render_template('login.html')
 
+@app.route("/login", methods=['POST'])
+def login_real():
+
+
+@app.route("/register", methods=['POST'])
+def register_real():
+
+
 
 
 @app.route("/register", methods=['GET'])
