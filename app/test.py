@@ -6,7 +6,9 @@ from enity.User import User
 DB = BaseDB()
 DB.create_table()
 
-obj = DB.search_by_param(User, 'userName', ['abc'])
+obj = DB.search_by_id(User,1)
+obj1 = DB.search_by_param(User,'haha')
 
 print(obj)
-print("two",obj.userName,obj.password)
+print("one",obj.userName,obj.password)
+print("two",obj1.userName,obj1.password)
