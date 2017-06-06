@@ -31,6 +31,9 @@ def denglu():
 @app.route("/zhuce")
 def zhuce():
     return render_template("register.html")
+@app.route("/rent.csv")
+def findCsv():
+    return render_template("rent.csv")
 
 @app.route("/register", methods=['POST','GET'])
 def register():
