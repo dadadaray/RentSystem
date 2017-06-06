@@ -243,10 +243,10 @@ function Sorted() {
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    for (var i = 0; i < 5; i++) {
-        var j = i + 1;
-        document.getElementById("tjroute").innerHTML = " <span >最佳路线推荐: + dis[i].plase + dis[i].dist < / span > ";
-    }
+    // for (var i = 0; i < 5; i++) {
+    //     var j = i + 1;
+    //     document.getElementById("tjroute").innerHTML = " <span >最佳路线推荐: + dis[i].plase + dis[i].dist < / span > ";
+    // }
 }
 
 
