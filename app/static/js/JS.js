@@ -76,7 +76,6 @@ function loadWorkMarker(x, y, locationName) {
         title: locationName,
         icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
         position: [x, y]
-
     });
 }
 
@@ -145,6 +144,7 @@ function addMarkerByAddress(address) {
     })
 }
 
+
 function delWorkLocation() {
     if (polygonArray) map.remove(polygonArray);
     if (workMarker) map.remove(workMarker);
@@ -187,6 +187,11 @@ AMap.service('AMap.Geocoder', function () {//回调函数
     });
     // 使用geocoder 对象完成相关功能
 })
+function placeDis(plase, dist) {
+    this.plase = plase;
+    this.dist = dist;
+
+}
 
 //记录所有房源地址
 function loadRentLocationByFile(fileName) {
@@ -214,27 +219,32 @@ function loadRentLocationByFile(fileName) {
             geocoder.getLocation(element, function (status, result) {
                 if (status === 'complete' && result.info === 'OK') {
                     //存放地点和匹配的信息
-                     var match=[];
-                     //存放地点
-                     match.push(element);
-                     //存放距离
-                     match.push(workjingwei.distance(result.geocodes[0].location));
-                    // alert(result.geocodes[0].location);
-                    // jingwei.push(result.geocodes[0].location);
-                    // alert(workjingwei.distance(result.geocodes[0].location))
-                    dis.push(match);
+                    // var match = [];
+                    // //存放地点
+                    // match.push(element);
+                    // //存放距离
+                    // match.push(workjingwei.distance(result.geocodes[0].location));
+                    dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location)));
                 }
             });
             //加上房源标记
             addMarkerByAddress(element);
         });
+
+
     });
-
-    console.log(dis);
-
-
-
+//排序
+    dis.sort(function (a, b) {
+        return a.dist - b.dist;
+    });
+    for (var i = 0; i < dis.length; i++) {
+        // alert("这是打印");
+        document.writeln(dis[i].plase + dis[i].dist);
+    }
 }
+
+
+
 
 //地图中添加地图操作ToolBar插件
 map.plugin(['AMap.ToolBar'], function () {
