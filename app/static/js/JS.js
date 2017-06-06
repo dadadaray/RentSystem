@@ -61,6 +61,7 @@ function importRentInfo() {
     } else {
         alert("工作地点为空，请填上")
     }
+    Sorted();
 }
 
 function workLocationSelected(e) {
@@ -230,24 +231,22 @@ function loadRentLocationByFile(fileName) {
             //加上房源标记
             addMarkerByAddress(element);
         });
-       // Sorted();
 
     });
 
 }
 
-//排序函数
-// function Sorted() {
-//     alert("这是函数哦！");
-//     dis.sort(function (a, b) {
-//         return a.dist - b.dist;
-//     });
-//     for (var i = 0; i < 5; i++) {
-//         //var j=i+1;
-//         //document.getElementById("tjroute").innerText = "点了BBBBBBBBBB";
-//         //document.writeln("最佳路线推荐"+ j +":"+dis[i].plase + dis[i].dist);
-//     }
-// }
+排序函数
+function Sorted() {
+    // alert("这是函数哦！");
+    dis.sort(function (a, b) {
+        return a.dist - b.dist;
+    });
+    for (var i = 0; i < 5; i++) {
+        var j = i + 1;
+        document.getElementById("tjroute").innerHTML = " <span >最佳路线推荐: + dis[i].plase + dis[i].dist < / span > ";
+    }
+}
 
 
 //地图中添加地图操作ToolBar插件

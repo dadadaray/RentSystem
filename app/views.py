@@ -37,7 +37,7 @@ def findCsv():
 
 @app.route("/register", methods=['POST','GET'])
 def register():
-    if request.method == 'POST':
+    if request.method == 'POST' :
         username = request.form['username']
         password = request.form['password']
         repw = request.form['prePassword']
