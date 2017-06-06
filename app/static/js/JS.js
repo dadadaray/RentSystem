@@ -230,10 +230,11 @@ function loadRentLocationByFile(fileName) {
             });
             //加上房源标记
             addMarkerByAddress(element);
+            document.getElementBy().innerHTML="";
+            Sorted();
         });
 
     });
-
 }
 
 排序函数
