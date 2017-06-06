@@ -230,7 +230,7 @@ function loadRentLocationByFile(fileName) {
             });
             //加上房源标记
             addMarkerByAddress(element);
-            document.getElementBy().innerHTML="";
+            document.getElementBy().innerHTML="  ";
             Sorted();
         });
 
