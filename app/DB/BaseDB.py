@@ -124,8 +124,7 @@ class BaseDB(object):
             obj = self.session.query(table_name).filter(table_name.userName == param).first()
             return obj
         except Exception as e:
-            print("wrong:",e)
-
+            return None
 
     '''
     功能：根据主键多条查询

@@ -230,10 +230,11 @@ function loadRentLocationByFile(fileName) {
             });
             //加上房源标记
             addMarkerByAddress(element);
+            document.getElementBy().innerHTML="  ";
+            Sorted();
         });
 
     });
-
 }
 
 排序函数
@@ -246,7 +247,6 @@ function Sorted() {
         var j = i + 1;
         document.getElementById("tjroute").innerHTML = " <span >最佳路线推荐: + dis[i].plase + dis[i].dist < / span > ";
     }
-    console.log
 }
 
 
