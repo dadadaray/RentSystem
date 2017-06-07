@@ -119,7 +119,7 @@ class BaseDB(object):
    创建日期：2017/6/01
    最后修改日期：2017/6/01
    '''
-    def search_by_param(self, table_name,param):
+    def search_User(self,table_name,param):
         try:
             obj = self.session.query(table_name).filter(table_name.userName == param).first()
             return obj
