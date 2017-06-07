@@ -144,3 +144,25 @@ class BaseDB(object):
         except Exception as e:
             print("wrong:", e)
         return objs
+
+    '''
+    功能：根据userid查询历史记录
+    参数：history  表名
+            way 出行方式
+            locationCity 定位的城市
+            goal目标城市
+            lowerPrice 最底价格
+            highPrice 最高价格
+            lowerArea 最低面积
+            highArea 最高面积
+    返回值：记录列表
+    创建人：房子毅
+    创建日期：2017/6/7
+    最后修改日期：2017/5/25
+    '''
+    def search_userid(self,table_name,userid):
+        try:
+            obj3 = self.session.query(table_name).filter(userId == userid).first
+        except Exception as e:
+            print("wrong:", e)
+        return obj3
