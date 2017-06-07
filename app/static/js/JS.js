@@ -2,7 +2,6 @@
 //初始化地图对象，加载地图
 var map = new AMap.Map('container', {
     resizeEnable: true,
-
 });
 // 添加标尺
 var scale = new AMap.Scale();
@@ -59,9 +58,11 @@ function importRentInfo() {
         var file = "rent.csv"
         loadRentLocationByFile(file);
     } else {
-        alert("工作地点为空，请填上")
+        alert("工作地点为空，请填上");
     }
-    Sorted();
+  //
+   // alert("点击查询");
+    searchshape();
 }
 
 function workLocationSelected(e) {
@@ -188,10 +189,16 @@ AMap.service('AMap.Geocoder', function () {//回调函数
     });
     // 使用geocoder 对象完成相关功能
 })
+//搜索类 by Ray
+AMap.service('AMap.PlaceSearch',function(){//回调函数
+    //实例化PlaceSearch
+    placeSearch= new AMap.PlaceSearch();
+    //TODO: 使用placeSearch对象调用关键字搜索的功能
+})
+
 function placeDis(plase, dist) {
     this.plase = plase;
     this.dist = dist;
-
 }
 
 //记录所有房源地址
@@ -230,14 +237,14 @@ function loadRentLocationByFile(fileName) {
             });
             //加上房源标记
             addMarkerByAddress(element);
-            document.getElementBy().innerHTML="  ";
+           // document.getElementBy().innerHTML = "  ";
             Sorted();
         });
 
     });
 }
 
-排序函数
+//排序函数
 function Sorted() {
     // alert("这是函数哦！");
     dis.sort(function (a, b) {
@@ -250,7 +257,7 @@ function Sorted() {
 }
 
 
-//地图中添加地图操作ToolBar插件
+//地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
 map.plugin(['AMap.ToolBar'], function () {
     //设置地位标记为自定义标记
     var toolBar = new AMap.ToolBar();
@@ -286,4 +293,20 @@ function getCity() {
 //解析定位错误信息
 function onError(data) {
     document.getElementById('tip').innerHTML = '定位失败';
+}
+
+function searchshape() {
+    alert("这是加载框");
+     //AMap.service(["AMap.PlaceSearch"], function () {
+        var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+            pageSize: 5,
+            pageIndex: 1,
+            city: "010", //全国城市
+            map: map,
+            panel: "panel"
+        });
+        //关键字查询
+   // });
+    placeSearch.search('北京大学');
+    alert("加载完。");
 }
