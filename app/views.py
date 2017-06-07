@@ -8,6 +8,7 @@ from DB.BaseDB import BaseDB
 import datetime
 import sys
 
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
@@ -60,6 +61,7 @@ def denglu():
 
 @app.route("/login", methods=['POST','GET'])
 def login():
+    logname = None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -74,12 +76,12 @@ def login():
             else:
                 #密码正确
                 if password == obj1.password:
-                    resp = make_response(render_template("index.html"))
+                    logname = username
+                    resp = make_response(render_template("index.html",logname = logname))
                     outdate = datetime.datetime.today()+datetime.timedelta(days=7)
                     resp.set_cookie(username,username,expires=outdate)
                     #获取当前登录用户名
                     na = request.cookies.get('username')
-                    print("na:",na)
                     #当前登录用户不为空，登出
                     if na != None:
                         resp.delete_cookie(na)
@@ -97,8 +99,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-    resp = make_response("delete cookie")
-    resp.delete_cookie('name')
+    logname = None
+    resp = make_response(render_template("index.html",logname = logname))
+    na = request.cookies.get('username')
+    resp.delete_cookie(na)
     return resp
 
 @app.route("/zhuce")
