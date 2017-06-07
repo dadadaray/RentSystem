@@ -38,13 +38,26 @@ def index():
 def findCsv():
     return render_template("rent.csv")
 
+@app.route("/history", methods=['POST','GET'])
+def setHistory():
+    if request.method == 'POST':
+        #locCity = request.form['locCity']
+        chooseSpace = request.form['chooseSpace']
+        highPrice = request.form['highPrice']
+        lowPrice = request.form['lowPrice']
+        highArea = request.form['highArea']
+        lowArea = request.form['lowArea']
+        vehicle = request.form['vehicle']
+        #print("locCity:%s chooseSpace:%s highPrice:%s" % (locCity, chooseSpace, highPrice))
+        print("chooseSpace:%s" % chooseSpace)
+        print("highPrice:%s lowPrice:%s highArea:%s lowArea:%s" % (highPrice,lowPrice,highArea,lowArea))
+        print("vehicle:%s" % vehicle)
+
+    return render_template("index.html")
+
 @app.route("/denglu")
 def denglu():
     return render_template("login.html")
-
-@app.route("/zhuce")
-def zhuce():
-    return render_template("register.html")
 
 @app.route("/login", methods=['POST','GET'])
 def login():
@@ -92,6 +105,10 @@ def logout():
     resp.delete_cookie(na)
     return resp
 
+@app.route("/zhuce")
+def zhuce():
+    return render_template("register.html")
+
 @app.route("/register", methods=['POST','GET'])
 def register():
     #error = None
@@ -100,10 +117,20 @@ def register():
         password = request.form['password']
         repw = request.form['prePassword']
 
-        print("username:%s password:%s repw:%s" % (username,password,repw))
-        user = User(userName=username,password=password)
-        DB.insert_into_table(user)
-    return render_template('login.html')
+        #验证用户名是否已存在
+        obj2 = DB.search_User(User, username)
+        if obj2 == None:
+
+            # 验证密码和确认密码是否一致
+            if password != repw:
+                flash("密码和确认密码不一致！")
+            user = User(userName=username, password=password)
+            DB.insert_into_table(user)
+            return render_template('login.html')
+        else:
+            flash("用户名已存在！")
+            return render_template('register.html')
+
 
 
 if __name__ == '__main__':
