@@ -1,10 +1,12 @@
 # -*- coding: UTF-8 -*-
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, and_
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-#生成orm基类
-Base = declarative_base()
+from sqlalchemy import Integer, ForeignKey, String, Column
+from sqlalchemy.orm import relationship
+from History import History
+from User import User
+from Record import Record
+from Base import Base
 
 class BaseDB(object):
     #创建实例，并连接rentsystem库
@@ -162,7 +164,7 @@ class BaseDB(object):
     '''
     def search_userid(self,table_name,userid):
         try:
-            obj3 = self.session.query(table_name).filter(userId == userid).first
+            objs = self.session.query(table_name).filter(table_name.userId == userid).all()
+            return objs
         except Exception as e:
             print("wrong:", e)
-        return obj3
