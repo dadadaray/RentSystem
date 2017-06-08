@@ -33,6 +33,11 @@
 						<input type="submit" class="button" value="注册">
 					</div>
 					<div class="hr"></div>
+                <center style="color:red">
+					{% for message in get_flashed_messages() %}
+						{{ message }}
+					{% endfor %}
+					</center>
 				</div>
             </form>
 			</div>
