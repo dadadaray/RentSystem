@@ -37,6 +37,13 @@ var workjingwei;
 //存放距离数组
 var dis = [];
 
+//获取表单数据
+var price1 = document.getElementById("price1").value;
+var price2 = document.getElementById("price2").value;
+var mian1 = document.getElementById("mian1").value;
+var mian1 = document.getElementById("mian2").value;
+
+
 //添加事件监听，在选择补完的地址后调用workLocationSelected
 AMap.event.addListener(auto, "select", workLocationSelected);
 
@@ -77,8 +84,6 @@ function takeSubway(radio) {
 //加载房源信息
 function importRentInfo() {
     var wl = document.getElementById("work-location").value
-    var price1 = document.getElementById("price1").value
-    var price2 = document.getElementById("price2").value
     if (wl) {
         var file = "rent.csv"
         loadRentLocationByFile(file);
@@ -146,6 +151,10 @@ function addMarkerByAddress(address) {
             rentMarker.content = "<div>房源：<a target = '_blank' href='http://bj.58.com/pinpaigongyu/?key=" + address + "'>" + address + "</a><div>"
             //在房源标记被点击时打开
             rentMarker.on('click', function (e) {
+                //删除推荐框
+                var a = doucment.getElementById("panel");
+                //或者
+                a.remove()
                 //鼠标移到标记上会显示标记content属性的内容
                 infoWindow.setContent(e.target.content);
                 //在标记的位置打开窗体
@@ -210,6 +219,7 @@ function loadRentLocationByFile(fileName) {
     geocoder.getLocation(locationcity, function (status, result) {
         if (status === 'complete' && result.info === 'OK') {
             workjingwei = result.geocodes[0].location;
+            // alert("推荐服务"+workjingwei);
             var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
                 pageSize: 5,
                 pageIndex: 1,
@@ -219,7 +229,6 @@ function loadRentLocationByFile(fileName) {
             placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
-
     //先删除现有的房源标记
     delRentLocation();
     //所有的地点都记录在记录在集合中
