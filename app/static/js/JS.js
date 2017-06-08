@@ -60,9 +60,6 @@ function importRentInfo() {
     } else {
         alert("工作地点为空，请填上");
     }
-  //
-   // alert("点击查询");
-    searchshape();
 }
 
 function workLocationSelected(e) {
@@ -190,15 +187,18 @@ AMap.service('AMap.Geocoder', function () {//回调函数
     // 使用geocoder 对象完成相关功能
 })
 //搜索类 by Ray
-AMap.service('AMap.PlaceSearch',function(){//回调函数
+AMap.service('AMap.PlaceSearch', function () {//回调函数
     //实例化PlaceSearch
-    placeSearch= new AMap.PlaceSearch();
+    placeSearch = new AMap.PlaceSearch();
+    placeSearch.setCity('010');   // 插件搜索范围为全国
     //TODO: 使用placeSearch对象调用关键字搜索的功能
 })
 
-function placeDis(plase, dist) {
+//新建类 by Ray
+function placeDis(plase, dist, jingweidu) {
     this.plase = plase;
     this.dist = dist;
+    this.jingweidu = jingweidu;
 }
 
 //记录所有房源地址
@@ -232,28 +232,27 @@ function loadRentLocationByFile(fileName) {
                     // match.push(element);
                     // //存放距离
                     // match.push(workjingwei.distance(result.geocodes[0].location));
-                    dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location)));
+                    dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
                 }
             });
             //加上房源标记
             addMarkerByAddress(element);
-           // document.getElementBy().innerHTML = "  ";
-            Sorted();
-        });
+            // document.getElementBy().innerHTML = "  ";
 
+        });
+        Sorted();
     });
 }
 
 //排序函数
 function Sorted() {
-    // alert("这是函数哦！");
+    alert("这是排序哦");
+    console.log(dis);
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    // for (var i = 0; i < 5; i++) {
-    //     var j = i + 1;
-    //     document.getElementById("tjroute").innerHTML = " <span >最佳路线推荐: + dis[i].plase + dis[i].dist < / span > ";
-    // }
+    //调用推荐框
+    searchshape();
 }
 
 
@@ -295,18 +294,17 @@ function onError(data) {
     document.getElementById('tip').innerHTML = '定位失败';
 }
 
+//推荐框 by Ray
 function searchshape() {
-    alert("这是加载框");
-     //AMap.service(["AMap.PlaceSearch"], function () {
-        var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
-            pageSize: 5,
-            pageIndex: 1,
-            city: "010", //全国城市
-            map: map,
-            panel: "panel"
-        });
-        //关键字查询
-   // });
-    placeSearch.search('北京大学');
-    alert("加载完。");
+    // alert("这是加载框");
+    //AMap.service(["AMap.PlaceSearch"], function () {
+    var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+        pageSize: 5,
+        pageIndex: 1,
+        city: "010", //全国城市
+        panel: "panel"
+    });
+    //关键字查询
+
+    placeSearch.searchNearBy("生活服务", [116.458696, 39.86114], 500)
 }
