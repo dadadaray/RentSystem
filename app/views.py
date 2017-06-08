@@ -18,7 +18,6 @@ if sys.getdefaultencoding() != default_encoding:
     sys.setdefaultencoding(default_encoding)
 
 
-
 DB = BaseDB()
 
 app = Flask(__name__)
@@ -44,24 +43,17 @@ def findCsv():
 @app.route("/his", methods=['POST','GET'])
 def setHistory():
     if request.method == 'POST':
-        #locCity = request.form['locCity']
         chooseSpace = request.form['chooseSpace']
         highPrice = request.form['highPrice']
         lowPrice = request.form['lowPrice']
         highArea = request.form['highArea']
         lowArea = request.form['lowArea']
         vehicle = request.form['vehicle']
-        #print("locCity:%s chooseSpace:%s highPrice:%s" % (locCity, chooseSpace, highPrice))
+
         print("chooseSpace:%s" % chooseSpace)
-        #print("highPrice:%s lowPrice:%s highArea:%s lowArea:%s" % (highPrice,lowPrice,highArea,lowArea))
-        #print("vehicle:%s" % vehicle)
 
-        json_data = {key: dict(request.form)[key][0] for key in dict(request.form)}
-        print(json_data)
-
-        print()
-        #history = History(loc = locCity, cspace = chooseSpace,hprice = highPrice,lprice = lowPrice,harea = highArea,larea = lowArea,veh = vehicle)
-        #DB.insert_into_table(history)
+        history = History(cspace = chooseSpace,hprice = highPrice,lprice = lowPrice,harea = highArea,larea = lowArea,veh = vehicle)
+        DB.insert_into_table(history)
 
     return render_template("index.html")
 
@@ -134,6 +126,7 @@ def register():
             # 验证密码和确认密码是否一致
             if password != repw:
                 flash("密码和确认密码不一致！")
+                #return render_template('register.html')
             user = User(userName=username, password=password)
             DB.insert_into_table(user)
             return render_template('login.html')
