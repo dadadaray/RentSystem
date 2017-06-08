@@ -209,8 +209,8 @@ function loadRentLocationByFile(fileName) {
         if (status === 'complete' && result.info === 'OK') {
             //alert(result.geocodes[0].location);
             workjingwei = result.geocodes[0].location;
-            alert("这是工作地点的经纬度" + workjingwei);
-            alert("这是加载框");
+            // alert("这是工作地点的经纬度" + workjingwei);
+            // alert("这是加载框");
             //AMap.service(["AMap.PlaceSearch"], function () {
             var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
                 pageSize: 5,
@@ -219,7 +219,7 @@ function loadRentLocationByFile(fileName) {
                 panel: "panel"
             });
             //关键字查询
-            alert(workjingwei);
+            // alert(workjingwei);
             placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
@@ -228,7 +228,7 @@ function loadRentLocationByFile(fileName) {
     delRentLocation();
     //所有的地点都记录在记录在集合中
     var rent_locations = new Set();
-    //jquery操作
+   s //jquery操作
     $.get(fileName, function (data) {
         data = data.split("\n");
         data.forEach(function (item, index) {
