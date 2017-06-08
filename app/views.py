@@ -5,14 +5,15 @@ from wtforms import StringField,SubmitField
 from wtforms.validators import Required
 from flask import redirect, make_response, flash
 from DB.BaseDB import BaseDB
-from app.DB.History import History
+from DB.User import User
+from DB.History import History
+import datetime
+import sys
 
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
-
-from app.DB import User
 
 DB = BaseDB()
 
@@ -28,8 +29,10 @@ def history():
     name = request.cookies.get("username")
     obj1 = DB.search_User(User, name)
     id = obj1.id
+    print(id)
     obj1 = DB.search_userid(History, id)
-    print(obj1.locationCity,obj1.goalCity)
+    print(obj1)
+    print(obj1.id)
 
     return render_template("index.html")
 
@@ -45,7 +48,7 @@ def index():
 def findCsv():
     return render_template("rent.csv")
 
-@app.route("/history", methods=['POST','GET'])
+@app.route("/his", methods=['POST','GET'])
 def setHistory():
     if request.method == 'POST':
         #locCity = request.form['locCity']
