@@ -40,6 +40,29 @@ var dis = [];
 //添加事件监听，在选择补完的地址后调用workLocationSelected
 AMap.event.addListener(auto, "select", workLocationSelected);
 
+//经纬度获取类  by Ray
+AMap.service('AMap.Geocoder', function () {//回调函数
+    //实例化Geocoder
+    geocoder = new AMap.Geocoder({
+        city: "010"//城市，默认：“全国”
+    });
+    // 使用geocoder 对象完成相关功能
+})
+//搜索类 by Ray
+AMap.service('AMap.PlaceSearch', function () {//回调函数
+    //实例化PlaceSearch
+    placeSearch = new AMap.PlaceSearch();
+    placeSearch.setCity('010');   // 插件搜索范围为全国
+    //TODO: 使用placeSearch对象调用关键字搜索的功能
+})
+
+//新建类 by Ray
+function placeDis(plase, dist, jingweidu) {
+    this.plase = plase;
+    this.dist = dist;
+    this.jingweidu = jingweidu;
+}
+
 
 function takeBus(radio) {
     vehicle = radio.value;
@@ -178,28 +201,6 @@ function loadWorkLocation() {
     })
 }
 
-//经纬度获取类  by Ray
-AMap.service('AMap.Geocoder', function () {//回调函数
-    //实例化Geocoder
-    geocoder = new AMap.Geocoder({
-        city: "010"//城市，默认：“全国”
-    });
-    // 使用geocoder 对象完成相关功能
-})
-//搜索类 by Ray
-AMap.service('AMap.PlaceSearch', function () {//回调函数
-    //实例化PlaceSearch
-    placeSearch = new AMap.PlaceSearch();
-    placeSearch.setCity('010');   // 插件搜索范围为全国
-    //TODO: 使用placeSearch对象调用关键字搜索的功能
-})
-
-//新建类 by Ray
-function placeDis(plase, dist, jingweidu) {
-    this.plase = plase;
-    this.dist = dist;
-    this.jingweidu = jingweidu;
-}
 
 //记录所有房源地址
 function loadRentLocationByFile(fileName) {
@@ -246,7 +247,6 @@ function loadRentLocationByFile(fileName) {
 
         });
         Sorted();
-
     });
 }
 
