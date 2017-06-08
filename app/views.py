@@ -1,20 +1,22 @@
 #-*- coding:utf-8 -*-
-from flask import Flask, render_template,url_for,request
-from flask.ext.wtf import Form
-from wtforms import StringField,SubmitField
-from wtforms.validators import Required
-from flask import redirect, make_response, flash
-from DB.BaseDB import BaseDB
 import datetime
 import sys
 
+from flask import Flask, render_template, request
+from flask import make_response, flash
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField
+from wtforms.validators import Required
+
+from DB.BaseDB import BaseDB
+from app.DB.History import History
 
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
 
-from enity.User import User
+from app.DB import User
 
 DB = BaseDB()
 
@@ -27,7 +29,13 @@ class NameForm(Form):
 
 @app.route("/history")
 def history():
-    return render_template("history.html")
+    name = request.cookies.get("username")
+    obj1 = DB.search_User(User, name)
+    id = obj1.id
+    obj1 = DB.search_userid(History, id)
+    print(obj1.locationCity,obj1.goalCity)
+
+    return render_template("index.html")
 
 @app.route('/')
 def hello_world():
@@ -58,7 +66,7 @@ def login():
         name = request.cookies.get(username)
         #如果没有登录
         if name == None:
-            obj1 = DB.search_User(User,username)
+            obj1 = DB.search_User(User, username)
             #用户名不存在
             if obj1 == None:
                 flash("用户名不存在，请重新登陆！")
@@ -77,6 +85,7 @@ def login():
                         resp.delete_cookie(na)
                     #更新当前登录用户名
                     resp.set_cookie('username',username)
+                    print("username")
                     return resp
                 #密码错误
                 else:
@@ -104,9 +113,10 @@ def register():
         repw = request.form['prePassword']
 
         print("username:%s password:%s repw:%s" % (username,password,repw))
-        user = User(userName=username,password=password)
+        user = User(userName=username, password=password)
         DB.insert_into_table(user)
     return render_template('login.html')
+
 
 
 if __name__ == '__main__':
