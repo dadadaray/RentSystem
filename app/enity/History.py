@@ -8,7 +8,6 @@ from app.DB.BaseDB import Base
 class History(Base):
     __tablename__ = 'history'
     id = Column(Integer, primary_key=True)
-    locationCity = Column(String(64))
     goalCity = Column(String(64))
     lowerPrice = Column(Integer)
     highPrice = Column(Integer)
