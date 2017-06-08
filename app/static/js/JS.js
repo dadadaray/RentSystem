@@ -152,9 +152,15 @@ function addMarkerByAddress(address) {
             //在房源标记被点击时打开
             rentMarker.on('click', function (e) {
                 //删除推荐框
-                var a = doucment.getElementById("panel");
+                alert("这是删除节点了新");
+                var a = document.getElementById("panel");
                 //或者
-                a.remove()
+                if(a.style.display=="block") {
+                    a.style.display = "none";
+                    alert("内容关闭了!");
+                }
+
+                //a.remove();
                 //鼠标移到标记上会显示标记content属性的内容
                 infoWindow.setContent(e.target.content);
                 //在标记的位置打开窗体
@@ -299,9 +305,9 @@ function getCity() {
     });
 }
 //解析定位错误信息
-// function onError(data) {
-//     document.getElementById('tip').innerHTML = '定位失败';
-// }
-// function onComplete(data) {
-//     document.getElementById('tip').innerHTML = '定位失败';
-// }
+function onError(data) {
+    document.getElementById('tip').innerHTML = '定位失败';
+}
+function onComplete(data) {
+    document.getElementById('tip').innerHTML = '定位失败';
+}
