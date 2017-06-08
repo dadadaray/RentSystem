@@ -77,6 +77,8 @@ function takeSubway(radio) {
 //加载房源信息
 function importRentInfo() {
     var wl = document.getElementById("work-location").value
+    var price1 = document.getElementById("price1").value
+    var price2 = document.getElementById("price2").value
     if (wl) {
         var file = "rent.csv"
         loadRentLocationByFile(file);
@@ -207,28 +209,22 @@ function loadRentLocationByFile(fileName) {
     //获取工作地点的经纬度
     geocoder.getLocation(locationcity, function (status, result) {
         if (status === 'complete' && result.info === 'OK') {
-            //alert(result.geocodes[0].location);
             workjingwei = result.geocodes[0].location;
-            // alert("这是工作地点的经纬度" + workjingwei);
-            // alert("这是加载框");
-            //AMap.service(["AMap.PlaceSearch"], function () {
             var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
                 pageSize: 5,
                 pageIndex: 1,
                 city: "010", //全国城市
                 panel: "panel"
             });
-            //关键字查询
-            // alert(workjingwei);
             placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
-    //alert(locationcity);
+
     //先删除现有的房源标记
     delRentLocation();
     //所有的地点都记录在记录在集合中
     var rent_locations = new Set();
-   s //jquery操作
+    //s //jquery操作
     $.get(fileName, function (data) {
         data = data.split("\n");
         data.forEach(function (item, index) {
@@ -241,24 +237,24 @@ function loadRentLocationByFile(fileName) {
                     dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
                 }
             });
+
             //加上房源标记
             addMarkerByAddress(element);
             // document.getElementBy().innerHTML = "  ";
-
         });
+        // alert("这是加上房源。")
         Sorted();
     });
 }
 
 //排序函数
 function Sorted() {
-    alert("这是排序哦");
+    //alert("这是排序哦");
     console.log(dis);
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
 }
-
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
 map.plugin(['AMap.ToolBar'], function () {
@@ -294,6 +290,9 @@ function getCity() {
     });
 }
 //解析定位错误信息
-function onError(data) {
-    document.getElementById('tip').innerHTML = '定位失败';
-}
+// function onError(data) {
+//     document.getElementById('tip').innerHTML = '定位失败';
+// }
+// function onComplete(data) {
+//     document.getElementById('tip').innerHTML = '定位失败';
+// }
