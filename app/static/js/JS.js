@@ -208,7 +208,18 @@ function loadRentLocationByFile(fileName) {
         if (status === 'complete' && result.info === 'OK') {
             //alert(result.geocodes[0].location);
             workjingwei = result.geocodes[0].location;
-            // alert("这是工作地点的经纬度"+workjingwei);
+            alert("这是工作地点的经纬度" + workjingwei);
+            alert("这是加载框");
+            //AMap.service(["AMap.PlaceSearch"], function () {
+            var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                pageSize: 5,
+                pageIndex: 1,
+                city: "010", //全国城市
+                panel: "panel"
+            });
+            //关键字查询
+            alert(workjingwei);
+            placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
     //alert(locationcity);
@@ -226,12 +237,6 @@ function loadRentLocationByFile(fileName) {
         rent_locations.forEach(function (element, index) {
             geocoder.getLocation(element, function (status, result) {
                 if (status === 'complete' && result.info === 'OK') {
-                    //存放地点和匹配的信息
-                    // var match = [];
-                    // //存放地点
-                    // match.push(element);
-                    // //存放距离
-                    // match.push(workjingwei.distance(result.geocodes[0].location));
                     dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
                 }
             });
@@ -241,6 +246,7 @@ function loadRentLocationByFile(fileName) {
 
         });
         Sorted();
+
     });
 }
 
@@ -251,8 +257,6 @@ function Sorted() {
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    //调用推荐框
-    searchshape();
 }
 
 
@@ -292,19 +296,4 @@ function getCity() {
 //解析定位错误信息
 function onError(data) {
     document.getElementById('tip').innerHTML = '定位失败';
-}
-
-//推荐框 by Ray
-function searchshape() {
-    // alert("这是加载框");
-    //AMap.service(["AMap.PlaceSearch"], function () {
-    var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
-        pageSize: 5,
-        pageIndex: 1,
-        city: "010", //全国城市
-        panel: "panel"
-    });
-    //关键字查询
-
-    placeSearch.searchNearBy("生活服务", [116.458696, 39.86114], 500)
 }
