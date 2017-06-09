@@ -98,12 +98,16 @@
 
 <div class="control-panel">
     <div class="control-entry">
+        <div>
         {% if logname %}
         <span id="login">Welcome,{{logname}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout">注销</a></span>
         {% else %}
         <span id="login"><a href="/denglu">登录</a>/<a href="/zhuce">注册</a></span>
         {% endif %}
+        </div>
+        <div>
         <center><h3>租房推荐规划</h3></center>
+        </div>
         <div style="display:none" id="hidden">
             <label>当前所在城市：</label>
             <div class="control-input">
