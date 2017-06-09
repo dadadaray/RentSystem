@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 from DB.BaseDB import BaseDB
-from enity.History import History
-from enity.Record import Record
-from enity.User import User
+from DB.History import History
+from DB.Record import Record
+from DB.User import User
 
 #创建表
 DB = BaseDB()
