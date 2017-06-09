@@ -151,14 +151,8 @@ function addMarkerByAddress(address) {
             rentMarker.content = "<div>房源：<a target = '_blank' href='http://bj.58.com/pinpaigongyu/?key=" + address + "'>" + address + "</a><div>"
             //在房源标记被点击时打开
             rentMarker.on('click', function (e) {
-                //删除推荐框
-                alert("这是删除节点了新");
-                var a = document.getElementById("panel");
-                //或者
-                if(a.style.display=="block") {
-                    a.style.display = "none";
-                    alert("内容关闭了!");
-                }
+                //alert("隐藏了！");
+                document.getElementById("panel").style.visibility = "hidden";//隐藏
 
                 //a.remove();
                 //鼠标移到标记上会显示标记content属性的内容
