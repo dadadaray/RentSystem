@@ -10,6 +10,7 @@ from DB.History import History
 import datetime
 import sys
 
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
@@ -40,7 +41,10 @@ def history():
 @app.route("/index")
 def index():
     logname = None
-    name = session['username']
+    try:
+        name = session['username']
+    except Exception as e:
+        name = None
     if name != None:
         logname = name
         resp = make_response(render_template("index.html", logname=logname))
@@ -54,24 +58,23 @@ def findCsv():
 @app.route("/his", methods=['POST','GET'])
 def setHistory():
     if request.method == 'POST':
-        #locCity = request.form['locCity']
-        chooseSpace = request.form['chooseSpace']
-        highPrice = request.form['highPrice']
-        lowPrice = request.form['lowPrice']
-        highArea = request.form['highArea']
-        lowArea = request.form['lowArea']
-        vehicle = request.form['vehicle']
-        #print("locCity:%s chooseSpace:%s highPrice:%s" % (locCity, chooseSpace, highPrice))
-        print("chooseSpace:%s" % chooseSpace)
-        #print("highPrice:%s lowPrice:%s highArea:%s lowArea:%s" % (highPrice,lowPrice,highArea,lowArea))
-        #print("vehicle:%s" % vehicle)
+        name = session['username']
+        if name != None:
+            obj1 = DB.search_User(User, name)
+            id1 = obj1.id
+            chooseSpace = request.form['chooseSpace']
+            hPrice = request.form['highPrice']
+            lPrice = request.form['lowPrice']
+            hArea = request.form['highArea']
+            lArea = request.form['lowArea']
+            vehicle = request.form['vehicle']
 
-        json_data = {key: dict(request.form)[key][0] for key in dict(request.form)}
-        print(json_data)
-
-        print()
-        #history = History(loc = locCity, cspace = chooseSpace,hprice = highPrice,lprice = lowPrice,harea = highArea,larea = lowArea,veh = vehicle)
-        #DB.insert_into_table(history)
+            history = History(goalCity=chooseSpace, lowerPrice=lPrice, highPrice=hPrice, lowerArea=lArea,
+                              highArea=hArea, way=vehicle, userId=id1)
+            DB.insert_into_table(history)
+        else:
+            #没登录时待解决
+            print("没登录！")
 
     return render_template("index.html")
 
