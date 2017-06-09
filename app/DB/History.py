@@ -1,9 +1,7 @@
 # -*- coding: UTF-8 -*-
 from sqlalchemy import Integer, ForeignKey, String, Column
 from sqlalchemy.orm import relationship
-
-from app.DB.BaseDB import Base
-
+from Base import Base
 
 class History(Base):
     __tablename__ = 'history'

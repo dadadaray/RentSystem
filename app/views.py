@@ -1,22 +1,19 @@
 #-*- coding:utf-8 -*-
-from flask import Flask, render_template,url_for,request
+from flask import Flask, render_template,url_for,request, session
 from flask.ext.wtf import Form
 from wtforms import StringField,SubmitField
 from wtforms.validators import Required
 from flask import redirect, make_response, flash
 from DB.BaseDB import BaseDB
-from enity.User import User
-from enity.History import History
+from DB.User import User
+from DB.History import History
 import datetime
 import sys
-
-
 
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
-
 
 DB = BaseDB()
 
@@ -27,13 +24,27 @@ class NameForm(Form):
     name = StringField('What is your name',validators=[Required()])
     submit = SubmitField('Submit')
 
+@app.route("/history")
+def history():
+    name = request.cookies.get("username")
+    obj1 = DB.search_User(User, name)
+    id = obj1.id
+    print(id)
+    obj1 = DB.search_userid(History, id)
+    print(obj1)
+    print(obj1.id)
 
-@app.route('/')
-def hello_world():
     return render_template("index.html")
 
+@app.route('/')
 @app.route("/index")
 def index():
+    logname = None
+    name = session['username']
+    if name != None:
+        logname = name
+        resp = make_response(render_template("index.html", logname=logname))
+        return resp
     return render_template("index.html")
 
 @app.route("/rent.csv")
@@ -43,17 +54,24 @@ def findCsv():
 @app.route("/his", methods=['POST','GET'])
 def setHistory():
     if request.method == 'POST':
+        #locCity = request.form['locCity']
         chooseSpace = request.form['chooseSpace']
         highPrice = request.form['highPrice']
         lowPrice = request.form['lowPrice']
         highArea = request.form['highArea']
         lowArea = request.form['lowArea']
         vehicle = request.form['vehicle']
-
+        #print("locCity:%s chooseSpace:%s highPrice:%s" % (locCity, chooseSpace, highPrice))
         print("chooseSpace:%s" % chooseSpace)
+        #print("highPrice:%s lowPrice:%s highArea:%s lowArea:%s" % (highPrice,lowPrice,highArea,lowArea))
+        #print("vehicle:%s" % vehicle)
 
-        history = History(cspace = chooseSpace,hprice = highPrice,lprice = lowPrice,harea = highArea,larea = lowArea,veh = vehicle)
-        DB.insert_into_table(history)
+        json_data = {key: dict(request.form)[key][0] for key in dict(request.form)}
+        print(json_data)
+
+        print()
+        #history = History(loc = locCity, cspace = chooseSpace,hprice = highPrice,lprice = lowPrice,harea = highArea,larea = lowArea,veh = vehicle)
+        #DB.insert_into_table(history)
 
     return render_template("index.html")
 
@@ -67,9 +85,13 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        name = request.cookies.get(username)
+        try:
+            name = session['username']
+        except Exception as e:
+            name = None
+        print("1",name)
         #如果没有登录
-        if name == None:
+        if name == None or username != name:
             obj1 = DB.search_User(User,username)
             #用户名不存在
             if obj1 == None:
@@ -80,15 +102,8 @@ def login():
                 if password == obj1.password:
                     logname = username
                     resp = make_response(render_template("index.html",logname = logname))
-                    outdate = datetime.datetime.today()+datetime.timedelta(days=7)
-                    resp.set_cookie(username,username,expires=outdate)
-                    #获取当前登录用户名
-                    na = request.cookies.get('username')
-                    #当前登录用户不为空，登出
-                    if na != None:
-                        resp.delete_cookie(na)
-                    #更新当前登录用户名
-                    resp.set_cookie('username',username)
+                    session['username'] = username
+                    print("username",session['username'])
                     return resp
                 #密码错误
                 else:
@@ -103,8 +118,7 @@ def login():
 def logout():
     logname = None
     resp = make_response(render_template("index.html",logname = logname))
-    na = request.cookies.get('username')
-    resp.delete_cookie(na)
+    session['username'] = None
     return resp
 
 @app.route("/zhuce")
@@ -126,7 +140,6 @@ def register():
             # 验证密码和确认密码是否一致
             if password != repw:
                 flash("密码和确认密码不一致！")
-                #return render_template('register.html')
             user = User(userName=username, password=password)
             DB.insert_into_table(user)
             return render_template('login.html')

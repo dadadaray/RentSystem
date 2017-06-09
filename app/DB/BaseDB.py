@@ -1,10 +1,12 @@
 # -*- coding: UTF-8 -*-
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, and_
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-#生成orm基类
-Base = declarative_base()
+from sqlalchemy import Integer, ForeignKey, String, Column
+from sqlalchemy.orm import relationship
+from History import History
+from User import User
+from Record import Record
+from Base import Base
 
 class BaseDB(object):
     #创建实例，并连接rentsystem库
@@ -145,3 +147,25 @@ class BaseDB(object):
         except Exception as e:
             print("wrong:", e)
         return objs
+
+    '''
+    功能：根据userid查询历史记录
+    参数：history  表名
+            way 出行方式
+            locationCity 定位的城市
+            goal目标城市
+            lowerPrice 最底价格
+            highPrice 最高价格
+            lowerArea 最低面积
+            highArea 最高面积
+    返回值：记录列表
+    创建人：房子毅
+    创建日期：2017/6/7
+    最后修改日期：2017/5/25
+    '''
+    def search_userid(self,table_name,userid):
+        try:
+            objs = self.session.query(table_name).filter(table_name.userId == userid).all()
+            return objs
+        except Exception as e:
+            print("wrong:", e)
