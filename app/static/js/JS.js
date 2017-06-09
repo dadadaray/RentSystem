@@ -153,7 +153,6 @@ function addMarkerByAddress(address) {
             rentMarker.on('click', function (e) {
                 //alert("隐藏了！");
                 document.getElementById("panel").style.visibility = "hidden";//隐藏
-
                 //a.remove();
                 //鼠标移到标记上会显示标记content属性的内容
                 infoWindow.setContent(e.target.content);
@@ -220,6 +219,7 @@ function loadRentLocationByFile(fileName) {
         if (status === 'complete' && result.info === 'OK') {
             workjingwei = result.geocodes[0].location;
             // alert("推荐服务"+workjingwei);
+            //左侧推荐框查询
             var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
                 pageSize: 5,
                 pageIndex: 1,
@@ -237,8 +237,24 @@ function loadRentLocationByFile(fileName) {
     $.get(fileName, function (data) {
         data = data.split("\n");
         data.forEach(function (item, index) {
+            // alert(item.split(",")[2]);
+            // alert(item.split(",")[2].split("-")[0]);
+            // if(price1!=null||price2!=null){
+            //
+            // }else{
+            //     //没有价格条件 直接显示全部价格
+            //      rent_locations.add(item.split(",")[1]);
+            // }
+            // alert(price1);
+            // alert(price2);
+            // if ((price1>item.split(",")[2].split("-")[0])&& (price2<item.split(",")[2].split("-")[1])) {
+            //     rent_locations.add(item.split(",")[1]);
+            // }
             rent_locations.add(item.split(",")[1]);
         });
+        //alert("这是所有房源信息");
+        //console.log(rent_locations);
+        //console.log(rent_locations);
         //获取各个房源信息的经纬度  by  Ray
         rent_locations.forEach(function (element, index) {
             geocoder.getLocation(element, function (status, result) {
@@ -249,9 +265,9 @@ function loadRentLocationByFile(fileName) {
 
             //加上房源标记
             addMarkerByAddress(element);
-            // document.getElementBy().innerHTML = "  ";
         });
         // alert("这是加上房源。")
+
         Sorted();
     });
 }
@@ -259,10 +275,12 @@ function loadRentLocationByFile(fileName) {
 //排序函数
 function Sorted() {
     //alert("这是排序哦");
-    console.log(dis);
+    // console.log(dis);
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
+    alert("这是追加内容！");
+    document.getElementByClassName('control-entry').innerHTML = "哈哈哈哈哈哈";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
