@@ -3,13 +3,19 @@ from bs4 import BeautifulSoup
 from urlparse import urljoin
 import requests
 import csv
+import sys
 
-url = "http://bj.58.com/pinpaigongyu/pn/{page}/?minprice=2000_4000"
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+    sys.setdefaultencoding(default_encoding)
+
+url = "http://bj.58.com/pinpaigongyu/?PGTID=0d3111f6-0000-178c-e19b-303b4e4731da&ClickID=1"
 
 #已完成的页数序号，初时为0
 page = 0
 
-csv_file = open("rent.csv","wb")
+csv_file = open("templates/rent.csv","wb")
 csv_writer = csv.writer(csv_file, delimiter=',')
 
 while True:
@@ -27,6 +33,8 @@ while True:
         house_title = house.select("h2")[0].string.encode("utf8")
         house_url = urljoin(url, house.select("a")[0]["href"])
         house_info_list = house_title.split()
+        house_area = house.select(".room")[0].encode("utf8")
+        house_area = house_area.split("卫", 1)[1].split("m",1)[0].split("\xa0 ",1)[1]
 
         # 如果第二列是公寓名则取第一列作为地址
         if "公寓" in house_info_list[1] or "青年社区" in house_info_list[1]:
@@ -35,6 +43,6 @@ while True:
             house_location = house_info_list[1]
 
         house_money = house.select(".money")[0].select("b")[0].string.encode("utf8")
-        csv_writer.writerow([house_title, house_location, house_money, house_url])
+        csv_writer.writerow([house_title, house_location, house_money, house_area, house_url])
 
 csv_file.close()
