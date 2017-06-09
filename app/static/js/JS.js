@@ -37,8 +37,38 @@ var workjingwei;
 //存放距离数组
 var dis = [];
 
+//获取表单数据
+var price1 = document.getElementById("price1").value;
+var price2 = document.getElementById("price2").value;
+var mian1 = document.getElementById("mian1").value;
+var mian1 = document.getElementById("mian2").value;
+
+
 //添加事件监听，在选择补完的地址后调用workLocationSelected
 AMap.event.addListener(auto, "select", workLocationSelected);
+
+//经纬度获取类  by Ray
+AMap.service('AMap.Geocoder', function () {//回调函数
+    //实例化Geocoder
+    geocoder = new AMap.Geocoder({
+        city: "010"//城市，默认：“全国”
+    });
+    // 使用geocoder 对象完成相关功能
+})
+//搜索类 by Ray
+AMap.service('AMap.PlaceSearch', function () {//回调函数
+    //实例化PlaceSearch
+    placeSearch = new AMap.PlaceSearch();
+    placeSearch.setCity('010');   // 插件搜索范围为全国
+    //TODO: 使用placeSearch对象调用关键字搜索的功能
+})
+
+//新建类 by Ray
+function placeDis(plase, dist, jingweidu) {
+    this.plase = plase;
+    this.dist = dist;
+    this.jingweidu = jingweidu;
+}
 
 
 function takeBus(radio) {
@@ -60,9 +90,6 @@ function importRentInfo() {
     } else {
         alert("工作地点为空，请填上");
     }
-  //
-   // alert("点击查询");
-    searchshape();
 }
 
 function workLocationSelected(e) {
@@ -124,6 +151,10 @@ function addMarkerByAddress(address) {
             rentMarker.content = "<div>房源：<a target = '_blank' href='http://bj.58.com/pinpaigongyu/?key=" + address + "'>" + address + "</a><div>"
             //在房源标记被点击时打开
             rentMarker.on('click', function (e) {
+                //alert("隐藏了！");
+                document.getElementById("panel").style.visibility = "hidden";//隐藏
+
+                //a.remove();
                 //鼠标移到标记上会显示标记content属性的内容
                 infoWindow.setContent(e.target.content);
                 //在标记的位置打开窗体
@@ -181,42 +212,28 @@ function loadWorkLocation() {
     })
 }
 
-//经纬度获取类  by Ray
-AMap.service('AMap.Geocoder', function () {//回调函数
-    //实例化Geocoder
-    geocoder = new AMap.Geocoder({
-        city: "010"//城市，默认：“全国”
-    });
-    // 使用geocoder 对象完成相关功能
-})
-//搜索类 by Ray
-AMap.service('AMap.PlaceSearch',function(){//回调函数
-    //实例化PlaceSearch
-    placeSearch= new AMap.PlaceSearch();
-    //TODO: 使用placeSearch对象调用关键字搜索的功能
-})
-
-function placeDis(plase, dist) {
-    this.plase = plase;
-    this.dist = dist;
-}
 
 //记录所有房源地址
 function loadRentLocationByFile(fileName) {
     //获取工作地点的经纬度
     geocoder.getLocation(locationcity, function (status, result) {
         if (status === 'complete' && result.info === 'OK') {
-            //alert(result.geocodes[0].location);
             workjingwei = result.geocodes[0].location;
-            // alert("这是工作地点的经纬度"+workjingwei);
+            // alert("推荐服务"+workjingwei);
+            var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                pageSize: 5,
+                pageIndex: 1,
+                city: "010", //全国城市
+                panel: "panel"
+            });
+            placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
-    //alert(locationcity);
     //先删除现有的房源标记
     delRentLocation();
     //所有的地点都记录在记录在集合中
     var rent_locations = new Set();
-    //jquery操作
+    //s //jquery操作
     $.get(fileName, function (data) {
         data = data.split("\n");
         data.forEach(function (item, index) {
@@ -226,36 +243,27 @@ function loadRentLocationByFile(fileName) {
         rent_locations.forEach(function (element, index) {
             geocoder.getLocation(element, function (status, result) {
                 if (status === 'complete' && result.info === 'OK') {
-                    //存放地点和匹配的信息
-                    // var match = [];
-                    // //存放地点
-                    // match.push(element);
-                    // //存放距离
-                    // match.push(workjingwei.distance(result.geocodes[0].location));
-                    dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location)));
+                    dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
                 }
             });
+
             //加上房源标记
             addMarkerByAddress(element);
-           // document.getElementBy().innerHTML = "  ";
-            Sorted();
+            // document.getElementBy().innerHTML = "  ";
         });
-
+        // alert("这是加上房源。")
+        Sorted();
     });
 }
 
 //排序函数
 function Sorted() {
-    // alert("这是函数哦！");
+    //alert("这是排序哦");
+    console.log(dis);
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    // for (var i = 0; i < 5; i++) {
-    //     var j = i + 1;
-    //     document.getElementById("tjroute").innerHTML = " <span >最佳路线推荐: + dis[i].plase + dis[i].dist < / span > ";
-    // }
 }
-
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
 map.plugin(['AMap.ToolBar'], function () {
@@ -294,19 +302,6 @@ function getCity() {
 function onError(data) {
     document.getElementById('tip').innerHTML = '定位失败';
 }
-
-function searchshape() {
-    alert("这是加载框");
-     //AMap.service(["AMap.PlaceSearch"], function () {
-        var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
-            pageSize: 5,
-            pageIndex: 1,
-            city: "010", //全国城市
-            map: map,
-            panel: "panel"
-        });
-        //关键字查询
-   // });
-    placeSearch.search('北京大学');
-    alert("加载完。");
+function onComplete(data) {
+    document.getElementById('tip').innerHTML = '定位失败';
 }

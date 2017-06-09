@@ -5,16 +5,15 @@ from wtforms import StringField,SubmitField
 from wtforms.validators import Required
 from flask import redirect, make_response, flash
 from DB.BaseDB import BaseDB
+from DB.User import User
+from DB.History import History
 import datetime
 import sys
-
 
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
-
-from enity.User import User
 
 DB = BaseDB()
 
@@ -25,6 +24,17 @@ class NameForm(Form):
     name = StringField('What is your name',validators=[Required()])
     submit = SubmitField('Submit')
 
+@app.route("/history")
+def history():
+    name = request.cookies.get("username")
+    obj1 = DB.search_User(User, name)
+    id = obj1.id
+    print(id)
+    obj1 = DB.search_userid(History, id)
+    print(obj1)
+    print(obj1.id)
+
+    return render_template("index.html")
 
 @app.route('/')
 def hello_world():

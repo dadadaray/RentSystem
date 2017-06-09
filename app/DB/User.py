@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
 from sqlalchemy import Integer, String, Column
-
-from app.DB.BaseDB import Base
-
+from Base import Base
 
 class User(Base):
     __tablename__ = 'user'
