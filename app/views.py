@@ -38,7 +38,7 @@ def index():
 def findCsv():
     return render_template("rent.csv")
 
-@app.route("/history", methods=['POST','GET'])
+@app.route("/his", methods=['POST','GET'])
 def setHistory():
     if request.method == 'POST':
         #locCity = request.form['locCity']
@@ -50,8 +50,15 @@ def setHistory():
         vehicle = request.form['vehicle']
         #print("locCity:%s chooseSpace:%s highPrice:%s" % (locCity, chooseSpace, highPrice))
         print("chooseSpace:%s" % chooseSpace)
-        print("highPrice:%s lowPrice:%s highArea:%s lowArea:%s" % (highPrice,lowPrice,highArea,lowArea))
-        print("vehicle:%s" % vehicle)
+        #print("highPrice:%s lowPrice:%s highArea:%s lowArea:%s" % (highPrice,lowPrice,highArea,lowArea))
+        #print("vehicle:%s" % vehicle)
+
+        json_data = {key: dict(request.form)[key][0] for key in dict(request.form)}
+        print(json_data)
+
+        print()
+        #history = History(loc = locCity, cspace = chooseSpace,hprice = highPrice,lprice = lowPrice,harea = highArea,larea = lowArea,veh = vehicle)
+        #DB.insert_into_table(history)
 
     return render_template("index.html")
 
