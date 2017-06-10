@@ -31,6 +31,7 @@ class BaseDB(object):
         # 创建表结构
         Base.metadata.create_all(self.engine)
 
+
     '''
     功能：向表中插入数据
     参数：数据元组
