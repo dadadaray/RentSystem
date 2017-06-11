@@ -218,7 +218,7 @@ function loadRentLocationByFile(fileName) {
     geocoder.getLocation(locationcity, function (status, result) {
         if (status === 'complete' && result.info === 'OK') {
             workjingwei = result.geocodes[0].location;
-            // alert("推荐服务"+workjingwei);
+
             //左侧推荐框查询
             var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
                 pageSize: 5,
@@ -226,6 +226,7 @@ function loadRentLocationByFile(fileName) {
                 city: "010", //全国城市
                 panel: "panel"
             });
+            alert("推荐服务"+workjingwei);
             placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
@@ -280,7 +281,7 @@ function Sorted() {
         return a.dist - b.dist;
     });
     alert("这是追加内容！");
-    document.getElementByClassName('control-entry').innerHTML = "哈哈哈哈哈哈";
+   // document.getElementByClassName('control-entry').innerHTML = "哈哈哈哈哈哈";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
