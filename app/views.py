@@ -31,9 +31,9 @@ def history():
     obj1 = DB.search_User(User, name)
     id = obj1.id
     print(id)
-    obj1 = DB.search_userid(History, id)
-    print(obj1)
-    print(obj1.id)
+    print(obj1.password)
+    obj2 = DB.search_userid(history, 1)
+    print(obj2.goalCity)
 
     return render_template("index.html")
 
