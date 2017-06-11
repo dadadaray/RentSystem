@@ -260,21 +260,35 @@ function loadRentLocationByFile(fileName) {
             minarea = mian11;
         }
     } else {
+        if (price11 == null && price22 == null) {
+            minprice = null;
+            maxprice = null;
+        }
         if (price11 != null && price22 == null) {
             minprice = price11;
+            maxprice = null;
         }
         if (price11 == null && price22 != null) {
             maxprice = price22;
+            minprice = null;
         }
         if (mian11 == null && mian22 != null) {
             maxarea = main22;
+            minarea = null;
         }
         if (main11 != null && main22 == null) {
             minarea = mian11;
+            maxarea = null;
+        }
+        if (main11 == null && main22 == null) {
+            minarea = null;
+            maxarea = null;
         }
     }
-
-    // alert("中途测试:"+minprice+maxprice+maxarea+minarea);
+    alert("最小价格" + minprice);
+    alert("最大价格" + maxprice);
+    alert("最小面积：" + minarea);
+    alert("最大面积" + maxarea)
 
     //先删除现有的房源标记
     delRentLocation();
@@ -290,6 +304,7 @@ function loadRentLocationByFile(fileName) {
                     var Garea = item.split(",")[3];
                     //所有条件填满
                     if (minprice != null || maxprice != null || minarea != null || maxarea != null) {
+                        alert("都不为空的。");
                         if (minprice != null && maxprice != null && minarea != null && maxarea != null) {
                             alert("价格面积最大最小都不为空");
                             if (minGpri > minprice && maxGpri < maxprice && Garea > minarea && Garea < maxarea)
@@ -365,6 +380,7 @@ function loadRentLocationByFile(fileName) {
 
 
                     } else {
+                        alert("条件为空");
                         //没有条件 直接显示全部
                         rent_locations.add(item.split(",")[1]);
                     }
