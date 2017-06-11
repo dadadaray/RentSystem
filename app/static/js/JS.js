@@ -42,6 +42,10 @@ var price1 = document.getElementById("price1").value;
 var price2 = document.getElementById("price2").value;
 var mian1 = document.getElementById("mian1").value;
 var mian1 = document.getElementById("mian2").value;
+var maxprice;
+var minprice;
+var maxarea;
+var minarea;
 
 
 //添加事件监听，在选择补完的地址后调用workLocationSelected
@@ -226,62 +230,96 @@ function loadRentLocationByFile(fileName) {
                 city: "010", //全国城市
                 panel: "panel"
             });
-            alert("推荐服务"+workjingwei);
+            //alert("推荐服务"+workjingwei);
             placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
+
+    //获取筛选条件
+    //筛选条件不为空
+    if (price1 != null || price2 != null || mian1 != null || main2 != null) {
+        alert("有数据");
+        //比较价格大小
+        if (price1 != null && price2 != null && mian1 != null && mian2 != null) {
+            alert("价格、面积都不为空")
+            if (price1 > price2) {
+                maxprice = price1;
+                minprice = price2
+            } else {
+                maxprice = price2;
+                minprice = price1;
+            }
+            if (price1 > price2) {
+                maxprice = price1;
+                minprice = price2
+            } else {
+                maxprice = price2;
+                minprice = price1;
+            }
+            alert(maxprice);
+            alert(minprice);
+            alert(maxarea);
+            alert(minarea);
+        }
+    }
+
+
     //先删除现有的房源标记
     delRentLocation();
     //所有的地点都记录在记录在集合中
     var rent_locations = new Set();
     //s //jquery操作
     $.get(fileName, function (data) {
-        data = data.split("\n");
-        data.forEach(function (item, index) {
-            // alert(item.split(",")[2]);
-            // alert(item.split(",")[2].split("-")[0]);
-            // if(price1!=null||price2!=null){
-            //
-            // }else{
-            //     //没有价格条件 直接显示全部价格
-            //      rent_locations.add(item.split(",")[1]);
-            // }
-            // alert(price1);
-            // alert(price2);
-            // if ((price1>item.split(",")[2].split("-")[0])&& (price2<item.split(",")[2].split("-")[1])) {
-            //     rent_locations.add(item.split(",")[1]);
-            // }
-            rent_locations.add(item.split(",")[1]);
-        });
-        //alert("这是所有房源信息");
-        //console.log(rent_locations);
-        //console.log(rent_locations);
-        //获取各个房源信息的经纬度  by  Ray
-        rent_locations.forEach(function (element, index) {
-            geocoder.getLocation(element, function (status, result) {
-                if (status === 'complete' && result.info === 'OK') {
-                    dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
+            data = data.split("\n");
+            data.forEach(function (item, index) {
+                    // alert(item.split(",")[2]);
+                    //  alert(item.split(",")[2].split("-")[0]);
+                    //  alert(item.split(",")[2].split("-")[1]);
+                    //  alert(item.split(",")[3]);
+
+                    //没有价格条件 直接显示全部价格
+                    rent_locations.add(item.split(",")[1]);
+
+
+                    // alert(price1);
+                    // alert(price2);
+                    // if ((price1>item.split(",")[2].split("-")[0])&& (price2<item.split(",")[2].split("-")[1])) {
+                    //     rent_locations.add(item.split(",")[1]);
+                    // }
+                    // rent_locations.add(item.split(",")[1]);
                 }
+            );
+            //alert("这是所有房源信息");
+            //console.log(rent_locations);
+            //console.log(rent_locations);
+            //获取各个房源信息的经纬度  by  Ray
+            rent_locations.forEach(function (element, index) {
+                geocoder.getLocation(element, function (status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
+                    }
+                });
+
+                //加上房源标记
+                addMarkerByAddress(element);
             });
+            // alert("这是加上房源。")
 
-            //加上房源标记
-            addMarkerByAddress(element);
-        });
-        // alert("这是加上房源。")
-
-        Sorted();
-    });
+            Sorted();
+        }
+    )
+    ;
 }
 
 //排序函数
 function Sorted() {
-    //alert("这是排序哦");
+    alert("这是排序哦");
     // console.log(dis);
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    alert("这是追加内容！");
-   // document.getElementByClassName('control-entry').innerHTML = "哈哈哈哈哈哈";
+    // alert("这是追加内容！");
+    // document.getElementByClassName('control-entry').innerHTML = "哈哈哈哈哈哈";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
