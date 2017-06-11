@@ -26,7 +26,7 @@ class NameForm(Form):
 
 @app.route("/history")
 def history():
-    name = request.cookies.get("username")
+    name = session['username'];
     obj1 = DB.search_User(User, name)
     id = obj1.id
     print(id)
