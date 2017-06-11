@@ -239,38 +239,45 @@ function loadRentLocationByFile(fileName) {
     var mian11 = document.getElementById("mian1").value;
     var mian22 = document.getElementById("mian2").value;
 
-    // // //转化为数值类型
-    // price11 = parseInt(price11);
-    // price22 = parseInt(price22);
-    // mian11 = parseInt(mian11);
-    // mian22 = parseInt(mian22);
     // //获取筛选条件
     // //筛选条件不为空
-    if (price11 != null || price22 != null || mian11 != null || main22 != null) {
-        //alert("有数据");
-        //比较价格大小
-        if (price11 != null && price22 != null && mian11 != null && mian22 != null) {
-            // alert("价格、面积都不为空")
-            alert("这是输入价格哦" + price11);
-            alert("这是输入的面积" + mian11);
-            if (price11 > price22) {
-                maxprice = price11;
-                minprice = price22
-            } else {
-                maxprice = price22;
-                minprice = price11;
-            }
-            if (mian11 > mian22) {
-                maxarea = mian11;
-                minarea = mian22;
-            } else {
-                maxarea = mian22;
-                minarea = mian11;
-            }
-            // alert(maxprice);
-            // alert(minprice);
-            // alert(maxarea);
-            // alert(minarea);
+    //判断最大最小数值  by Ray
+    //alert("有数据");
+    //比较价格大小
+    if (price11 != null && price22 != null && mian11 != null && mian22 != null) {
+        // alert("价格、面积都不为空")
+        // alert("这是输入价格哦" + price11);
+        // alert("这是输入的面积" + mian11);
+        if (price11 > price22) {
+            maxprice = price11;
+            minprice = price22
+        } else {
+            maxprice = price22;
+            minprice = price11;
+        }
+        if (mian11 > mian22) {
+            maxarea = mian11;
+            minarea = mian22;
+        } else {
+            maxarea = mian22;
+            minarea = mian11;
+        }
+    } else {
+        if (price11 != null && price22 == null) {
+            minprice = price11;
+            maxprice = null;
+        }
+        if (price11 == null && price22 != null) {
+            maxprice = price22;
+            minprice = null;
+        }
+        if (mian11 == null && mian22 != null) {
+            maxarea = main22;
+            minarea = null;
+        }
+        if (main11 != null && main22 == null) {
+            minarea = mian11;
+            maxarea = null;
         }
     }
 
@@ -284,14 +291,51 @@ function loadRentLocationByFile(fileName) {
             data = data.split("\n");
             data.forEach(function (item, index) {
                     // alert(item.split(",")[2]);
-                    //  alert(item.split(",")[2].split("-")[0]);
-                    //  alert(item.split(",")[2].split("-")[1]);
-                    //  alert(item.split(",")[3]);
+                    //  alert(item.split(",")[2].split("-")[0]);// 最小价格
+                    //  alert(item.split(",")[2].split("-")[1]); //最大价格
+                    //  alert(item.split(",")[3]);  // 面积
+                    var minGpri = item.split(",")[2].split("-")[0];
+                    var maxGpri = item.split(",")[2].split("-")[1];
+                    var Garea = item.split(",")[3];
+                    //所有条件填满
+                    if (minprice != null || maxprice != null || minarea != null || maxarea != null) {
+                        if (minprice != null && maxprice != null && minarea != null && maxarea != null) {
+                            alert("价格面积最大最小都不为空");
+                            if (minGpri > minprice && maxGpri < maxprice && Garea > minarea && Garea < maxarea)
+                                rent_locations.add(item.split(",")[1]);
+                        } else {
+                            //最低价格不为空
+                            if (minprice != null && maxprice == null) {
+                                //最低价格不为空，面积全满
+                                if (minarea != null && maxarea != null) {
+                                    if (minGpri >= minprice && Garea >= minarea && Garea <= maxarea) {
+                                        rent_locations.add(item.split(",")[1]);
+                                    }
+                                } else {
+                                    // 最低价格不为空，只有最小面积
+                                    if (minarea != null && maxarea == null) {
+                                        if (minGpri >= minprice && Garea >= minarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
+                                    }
+                                    //最低价格不为空，只有最大面积
+                                    if (minarea == null && maxarea != null) {
+                                        if (minGpri >= minprice && Garea <= maxarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
+                                    }
 
-                    //没有价格条件 直接显示全部价格
-                    rent_locations.add(item.split(",")[1]);
+                                }
+
+                            }
+
+                        }
 
 
+                    } else {
+                        //没有条件 直接显示全部
+                        rent_locations.add(item.split(",")[1]);
+                    }
                     // alert(price1);
                     // alert(price2);
                     // if ((price1>item.split(",")[2].split("-")[0])&& (price2<item.split(",")[2].split("-")[1])) {
