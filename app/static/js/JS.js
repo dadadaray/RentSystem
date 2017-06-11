@@ -238,49 +238,60 @@ function loadRentLocationByFile(fileName) {
     var price22 = document.getElementById("price2").value;
     var mian11 = document.getElementById("mian1").value;
     var mian22 = document.getElementById("mian2").value;
-
+    alert(typeof(price11));
     // //获取筛选条件
     // //筛选条件不为空
     //判断最大最小数值  by Ray
     //alert("有数据");
     //比较价格大小
     if (price11 != null && price22 != null && mian11 != null && mian22 != null) {
-        if (price11 > price22) {
+        alert("1");
+        if (price11 >= price22) {
+            alert("2");
             maxprice = price11;
             minprice = price22
         } else {
+            alert("3");
             maxprice = price22;
             minprice = price11;
         }
         if (mian11 > mian22) {
+            alert("4");
             maxarea = mian11;
             minarea = mian22;
         } else {
+            alert("5");
             maxarea = mian22;
             minarea = mian11;
         }
     } else {
+        alert("有空的额 ");
         if (price11 == null && price22 == null) {
             minprice = null;
             maxprice = null;
         }
         if (price11 != null && price22 == null) {
+            alert("到了 1不为空，2为空");
             minprice = price11;
             maxprice = null;
         }
         if (price11 == null && price22 != null) {
+            alert("8");
             maxprice = price22;
             minprice = null;
         }
         if (mian11 == null && mian22 != null) {
+            alert("89");
             maxarea = main22;
             minarea = null;
         }
         if (main11 != null && main22 == null) {
+            alert("48");
             minarea = mian11;
             maxarea = null;
         }
         if (main11 == null && main22 == null) {
+            alert("81");
             minarea = null;
             maxarea = null;
         }
@@ -304,9 +315,9 @@ function loadRentLocationByFile(fileName) {
                     var Garea = item.split(",")[3];
                     //所有条件填满
                     if (minprice != null || maxprice != null || minarea != null || maxarea != null) {
-                        alert("都不为空的。");
+                        //alert("都不为空的。");
                         if (minprice != null && maxprice != null && minarea != null && maxarea != null) {
-                            alert("价格面积最大最小都不为空");
+                           // alert("价格面积最大最小都不为空");
                             if (minGpri > minprice && maxGpri < maxprice && Garea > minarea && Garea < maxarea)
                                 rent_locations.add(item.split(",")[1]);
                         } else {
