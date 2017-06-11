@@ -38,10 +38,7 @@ var workjingwei;
 var dis = [];
 
 //获取表单数据
-var price1 = document.getElementById("price1").value;
-var price2 = document.getElementById("price2").value;
-var mian1 = document.getElementById("mian1").value;
-var mian1 = document.getElementById("mian2").value;
+
 var maxprice;
 var minprice;
 var maxarea;
@@ -87,7 +84,9 @@ function takeSubway(radio) {
 
 //加载房源信息
 function importRentInfo() {
-    var wl = document.getElementById("work-location").value
+
+    var wl = document.getElementById("work-location").value;
+    //alert("初始化打印la" + price11);
     if (wl) {
         var file = "rent.csv"
         loadRentLocationByFile(file);
@@ -234,32 +233,44 @@ function loadRentLocationByFile(fileName) {
             placeSearch.searchNearBy("生活服务", workjingwei, 500);
         }
     });
+    //获取输入的数据
+    var price11 = document.getElementById("price1").value;
+    var price22 = document.getElementById("price2").value;
+    var mian11 = document.getElementById("mian1").value;
+    var mian22 = document.getElementById("mian2").value;
 
-    //获取筛选条件
-    //筛选条件不为空
-    if (price1 != null || price2 != null || mian1 != null || main2 != null) {
-        alert("有数据");
+    // // //转化为数值类型
+    // price11 = parseInt(price11);
+    // price22 = parseInt(price22);
+    // mian11 = parseInt(mian11);
+    // mian22 = parseInt(mian22);
+    // //获取筛选条件
+    // //筛选条件不为空
+    if (price11 != null || price22 != null || mian11 != null || main22 != null) {
+        //alert("有数据");
         //比较价格大小
-        if (price1 != null && price2 != null && mian1 != null && mian2 != null) {
-            alert("价格、面积都不为空")
-            if (price1 > price2) {
-                maxprice = price1;
-                minprice = price2
+        if (price11 != null && price22 != null && mian11 != null && mian22 != null) {
+            // alert("价格、面积都不为空")
+            alert("这是输入价格哦" + price11);
+            alert("这是输入的面积" + mian11);
+            if (price11 > price22) {
+                maxprice = price11;
+                minprice = price22
             } else {
-                maxprice = price2;
-                minprice = price1;
+                maxprice = price22;
+                minprice = price11;
             }
-            if (price1 > price2) {
-                maxprice = price1;
-                minprice = price2
+            if (mian11 > mian22) {
+                maxarea = mian11;
+                minarea = mian22;
             } else {
-                maxprice = price2;
-                minprice = price1;
+                maxarea = mian22;
+                minarea = mian11;
             }
-            alert(maxprice);
-            alert(minprice);
-            alert(maxarea);
-            alert(minarea);
+            // alert(maxprice);
+            // alert(minprice);
+            // alert(maxarea);
+            // alert(minarea);
         }
     }
 
