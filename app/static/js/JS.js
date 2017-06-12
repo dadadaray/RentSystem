@@ -529,7 +529,7 @@ function Sorted() {
         return a.dist - b.dist;
     });
     // alert("这是追加内容！");
-    // document.getElementByClassName('control-entry').innerHTML = "哈哈哈哈哈哈";
+     document.getElementsByClassName('control-entry').innerHTML = "aaaa";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
