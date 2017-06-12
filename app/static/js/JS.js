@@ -302,7 +302,7 @@ function loadRentLocationByFile(fileName) {
     alert("最小价格" + minprice);
     alert("最大价格" + maxprice);
     alert("最小面积：" + minarea);
-    alert("最大面积" + maxarea)
+    alert("最大面积" + maxarea);
 
     //先删除现有的房源标记
     delRentLocation();
@@ -317,36 +317,36 @@ function loadRentLocationByFile(fileName) {
                     var maxGpri = item.split(",")[2].split("-")[1];
                     var Garea = item.split(",")[3];
                     //所有条件填满
-                    if (minprice != null || maxprice != null || minarea != null || maxarea != null) {
-                        //alert("都不为空的。");
-                        if (minprice != null && maxprice != null && minarea != null && maxarea != null) {
+                    if ((!isNaN(minprice))||(!isNaN(maxprice)) || (!isNaN(minarea)) || (!isNaN(maxarea))) {
+                         alert("都不为空的。");
+                        if ((!isNaN(minprice)) &&(!isNaN(maxprice)) && (!isNaN(minarea)) && (!isNaN(maxarea))) {
                             // alert("价格面积最大最小都不为空");
                             if (minGpri > minprice && maxGpri < maxprice && Garea > minarea && Garea < maxarea)
                                 rent_locations.add(item.split(",")[1]);
                         } else {
                             //最低价格不为空
-                            if (minprice != null && maxprice == null) {
+                            if ((!isNaN(minprice)) && isNaN(maxprice)) {
                                 alert("最低价格为不为空");
                                 //最低价格不为空，面积全满
-                                if (minarea != null && maxarea != null) {
+                                if ((!isNaN(minarea)) && (!isNaN(maxarea))) {
                                     if (minGpri >= minprice && Garea >= minarea && Garea <= maxarea) {
                                         rent_locations.add(item.split(",")[1]);
                                     }
                                 } else {
                                     // 最低价格不为空，只有最小面积
-                                    if (minarea != null && maxarea == null) {
+                                    if ((!isNaN(minarea)) && isNaN(maxarea)) {
                                         if (minGpri >= minprice && Garea >= minarea) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
                                     }
                                     //最低价格不为空，只有最大面积
-                                    if (minarea == null && maxarea != null) {
+                                    if (isNaN(minarea) && (!isNaN(maxarea))) {
                                         if (minGpri >= minprice && Garea <= maxarea) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
                                     }
                                     //最低价格下，没有面积数据
-                                    if (minarea == null && maxarea == null) {
+                                    if (isNaN(minarea) && isNaN(maxarea)) {
                                         if (minGpri >= minprice) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
