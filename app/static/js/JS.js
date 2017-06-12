@@ -515,8 +515,6 @@ function loadRentLocationByFile(fileName) {
                 //加上房源标记
                 addMarkerByAddress(element);
             });
-            // alert("这是加上房源。")
-
             Sorted();
         }
     )
