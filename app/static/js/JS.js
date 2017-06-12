@@ -258,7 +258,7 @@ function loadRentLocationByFile(fileName) {
             maxprice = price11;
             minprice = price22
         } else {
-           // alert("3");
+            // alert("3");
             maxprice = price22;
             minprice = price11;
         }
@@ -288,7 +288,7 @@ function loadRentLocationByFile(fileName) {
             minprice = price11;
         }
         if (isNaN(price11) && (!isNaN(price22))) {
-           // alert("8");
+            // alert("8");
             maxprice = price22;
         }
         if ((!isNaN(mian11)) && (!isNaN(mian22))) {
@@ -300,7 +300,7 @@ function loadRentLocationByFile(fileName) {
             maxarea = mian22;
         }
         if ((!isNaN(mian11)) && isNaN(mian22)) {
-           // alert("48");
+            // alert("48");
             minarea = mian11;
         }
     }
@@ -318,23 +318,37 @@ function loadRentLocationByFile(fileName) {
             data = data.split("\n");
             data.forEach(function (item, index) {
 
-                    var minGpri = item.split(",")[2].split("-")[0];
-                    var maxGpri = item.split(",")[2].split("-")[1];
-                    var Garea = item.split(",")[3];
-                    //所有条件填满
-                    if ((!isNaN(minprice)) || (!isNaN(maxprice)) || (!isNaN(minarea)) || (!isNaN(maxarea))) {
-                        // alert("有不为空的。");
-                        if ((!isNaN(minprice)) && (!isNaN(maxprice)) && (!isNaN(minarea)) && (!isNaN(maxarea))) {
-                            //alert("价格面积最大最小都不为空");
-                            if (minGpri > minprice && maxGpri < maxprice && Garea > minarea && Garea < maxarea)
+                var minGpri = item.split(",")[2].split("-")[0];
+                var maxGpri = item.split(",")[2].split("-")[1];
+                var Garea = item.split(",")[3];
+                //所有条件填满
+                if ((!isNaN(minprice)) || (!isNaN(maxprice)) || (!isNaN(minarea)) || (!isNaN(maxarea))) {
+                    // alert("有不为空的。");
+                    if ((!isNaN(minprice)) && (!isNaN(maxprice)) && (!isNaN(minarea)) && (!isNaN(maxarea))) {
+                        //alert("价格面积最大最小都不为空");
+                        if (isNaN(maxGpri)) {
+                            //区分没有最大价格的情况
+                            if (minGpri >= minprice && minGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
+                                // console.log(minGpri);
+                                // console.log(maxGpri);
+                                // console.log(Garea);
                                 rent_locations.add(item.split(",")[1]);
+
+                            } else {
+                                if (minGpri >= minprice && maxGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
+                                    console.log(minGpri);
+                                    console.log(maxGpri);
+                                    console.log(Garea);
+                                    rent_locations.add(item.split(",")[1]);
+                                }
+                            }
                         } else {
                             //最低价格不为空
                             if ((!isNaN(minprice)) && isNaN(maxprice)) {
                                 //alert("最低价格为不为空,z");
                                 //最低价格不为空，面积全满
                                 if ((!isNaN(minarea)) && (!isNaN(maxarea))) {
-                                   // alert("最低价格不为空，最高价格为空，面积都不为空");
+                                    // alert("最低价格不为空，最高价格为空，面积都不为空");
                                     if (minGpri >= minprice && Garea >= minarea && Garea <= maxarea) {
                                         rent_locations.add(item.split(",")[1]);
                                     }
@@ -348,7 +362,7 @@ function loadRentLocationByFile(fileName) {
                                     }
                                     //最低价格不为空，只有最大面积
                                     if (isNaN(minarea) && (!isNaN(maxarea))) {
-                                       // alert("最低价格不为空，最大价格为空，最小面积为空，最大面积不为空");
+                                        // alert("最低价格不为空，最大价格为空，最小面积为空，最大面积不为空");
                                         if (minGpri >= minprice && Garea <= maxarea) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
@@ -370,7 +384,7 @@ function loadRentLocationByFile(fileName) {
 
                                 //最高价格不为空，面积全满
                                 if ((!isNaN(minarea)) && (!isNaN(maxarea))) {
-                                   // alert("最低价格为空，最高价格不为空，有大小面积");
+                                    // alert("最低价格为空，最高价格不为空，有大小面积");
                                     if (maxGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
                                         rent_locations.add(item.split(",")[1]);
                                     }
@@ -384,14 +398,14 @@ function loadRentLocationByFile(fileName) {
                                     }
                                     //最低价格不为空，只有最大面积
                                     if (isNaN(minarea) && (!isNaN(maxarea))) {
-                                       // alert("最低价格为空，最高价格不为空，没有小面积，有大面积");
+                                        // alert("最低价格为空，最高价格不为空，没有小面积，有大面积");
                                         if (minGpri >= minprice && Garea <= maxarea) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
                                     }
                                     //最低价格下，没有面积数据
                                     if (isNaN(minarea) && isNaN(maxarea)) {
-                                       // alert("最低价格为空，最高价格不为空，没有面积");
+                                        // alert("最低价格为空，最高价格不为空，没有面积");
                                         if (minGpri >= minprice) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
@@ -413,14 +427,14 @@ function loadRentLocationByFile(fileName) {
                                 } else {
                                     // 只有最小面积
                                     if ((!isNaN(minarea)) && isNaN(maxarea)) {
-                                      //  alert("价格都为空，有小面积，没有大面积");
+                                        //  alert("价格都为空，有小面积，没有大面积");
                                         if (Garea >= minarea) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
                                     }
                                     //只有最大面积
                                     if (isNaN(minarea) && (!isNaN(maxarea))) {
-                                       // alert("价格都为空，没有小面积，只有大面积");
+                                        // alert("价格都为空，没有小面积，只有大面积");
                                         if (Garea <= maxarea) {
                                             rent_locations.add(item.split(",")[1]);
                                         }
@@ -454,22 +468,15 @@ function loadRentLocationByFile(fileName) {
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         //alert("条件为空");
                         //没有条件 直接显示全部
                         rent_locations.add(item.split(",")[1]);
                     }
-                    // alert(price1);
-                    // alert(price2);
-                    // if ((price1>item.split(",")[2].split("-")[0])&& (price2<item.split(",")[2].split("-")[1])) {
-                    //     rent_locations.add(item.split(",")[1]);
-                    // }
-                    // rent_locations.add(item.split(",")[1]);
                 }
-            );
+            });
             //alert("这是所有房源信息");
-            //console.log(rent_locations);
+            console.log(rent_locations);
             //console.log(rent_locations);
             //获取各个房源信息的经纬度  by  Ray
             rent_locations.forEach(function (element, index) {
