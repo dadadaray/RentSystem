@@ -385,8 +385,15 @@ function loadRentLocationByFile(fileName) {
                                 //最高价格不为空，面积全满
                                 if ((!isNaN(minarea)) && (!isNaN(maxarea))) {
                                     // alert("最低价格为空，最高价格不为空，有大小面积");
-                                    if (maxGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
-                                        rent_locations.add(item.split(",")[1]);
+                                    if (isNaN(maxGpri)) {
+                                        if (minGpri <= maxprice && Garea <= maxarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
+
+                                    } else {
+                                        if (maxGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
                                     }
                                 } else {
                                     // 最高价格不为空，只有最小面积
@@ -448,22 +455,41 @@ function loadRentLocationByFile(fileName) {
                                 //最低价格不为空，面积全满
                                 if ((!isNaN(minarea)) && isNaN(maxarea)) {
                                     //alert("有大小价格，最小面积不为空，最大面积为空");
-                                    if (minGpri > minprice && maxGpri < maxprice && minGpri >= minprice && Garea >= minarea) {
-                                        rent_locations.add(item.split(",")[1]);
+                                    if (isNaN(maxGpri)) {
+                                        if (minGpri > minprice && minGpri < maxprice && Garea >= minarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
+
+                                    } else {
+                                        if (minGpri > minprice && maxGpri < maxprice && minGpri >= minprice && Garea >= minarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
                                     }
                                 }
                                 //最低价格不为空，只有最大面积
                                 if (isNaN(minarea) && (!isNaN(maxarea))) {
                                     //alert("有大小价格，最小面积为空，最大面积不为空");
-                                    if (minGpri > minprice && maxGpri < maxprice && minGpri >= minprice && Garea <= maxarea) {
-                                        rent_locations.add(item.split(",")[1]);
+                                    if (isNaN(maxGpri)) {
+                                        if (minGpri > minprice && minGpri < maxprice && Garea <= maxarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
+                                    } else {
+                                        if (minGpri > minprice && maxGpri < maxprice && minGpri >= minprice && Garea <= maxarea) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
                                     }
                                 }
                                 //最低价格下，没有面积数据
                                 if (isNaN(minarea) && isNaN(maxarea)) {
                                     //alert("有大小价格，没有面积");
-                                    if (minGpri > minprice && maxGpri < maxprice) {
-                                        rent_locations.add(item.split(",")[1]);
+                                    if (isNaN(maxGpri)) {
+                                        if (minGpri > minprice && minGpri < maxprice) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
+                                    } else {
+                                        if (minGpri > minprice && maxGpri < maxprice) {
+                                            rent_locations.add(item.split(",")[1]);
+                                        }
                                     }
                                 }
                             }
