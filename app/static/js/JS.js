@@ -93,6 +93,26 @@ function importRentInfo() {
     } else {
         alert("工作地点为空，请填上");
     }
+
+    var Condition = {};
+    Condition["chooseSpace"] = $("#work-location").val().trim();
+    Condition["lowPrice"] = $("#price1").val().trim()
+    Condition["highPrice"] = $("#price2").val().trim()
+    Condition["lowArea"] = $("#mian1").val().trim()
+    Condition["highArea"] = $("#mian2").val().trim()
+    Condition["vehicle"] = $(".way").val().trim()
+
+    $.ajax({
+        type:'POST',
+        url:"/his",
+        data:Condition,
+        success:function(){
+            alert("success");
+        },
+        error:function(){
+            alert("fail")
+        }
+    })
 }
 
 function workLocationSelected(e) {
