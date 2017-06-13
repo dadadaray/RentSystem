@@ -145,6 +145,7 @@ def register():
             # 验证密码和确认密码是否一致
             if password != repw:
                 flash("密码和确认密码不一致！")
+                return render_template('register.html')
             user = User(userName=username, password=password)
             DB.insert_into_table(user)
             return render_template('login.html')
