@@ -169,3 +169,22 @@ class BaseDB(object):
             return objs
         except Exception as e:
             print("wrong:", e)
+
+    '''
+       功能：根据工作地点查询click数
+       参数：table_name   表名
+             param_name 属性名
+             params 属性值列表
+       返回值：记录列表
+       创建人：童海苹
+       创建日期：2017/6/12
+       最后修改日期：2017/6/12
+       '''
+
+    # def search_Click(self, table_name, param):
+    #     try:
+    #         obj = self.session.query(table_name).filter(table_name.houseLocation == param).first()
+    #         print(obj.click)
+    #         return obj
+    #     except Exception as e:
+    #         return None
