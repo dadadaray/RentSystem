@@ -531,12 +531,17 @@ function loadRentLocationByFile(fileName) {
                         dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
                     }
                 });
-
                 //加上房源标记
                 addMarkerByAddress(element);
             });
+           // alert("这是最新的。" + dis[2].dist);
             Sorted();
-            // alert("这是追加内容！");
+            var addd = document.getElementById("addd");
+            addd.innerHTML = "<br><br>";
+            for(var j=1;j<6;j++){
+                alert("hi");
+                addd.innerHTML += dis[j].plase+":"+dis[j].dist + "<br>";
+            }
 
         }
     )
@@ -544,28 +549,31 @@ function loadRentLocationByFile(fileName) {
 
 //排序函数
 function Sorted() {
-    alert("这是排序哦");
 
+    alert("这是排序哦");
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    var addd = document.getElementById("addd");
+
+    //alert(typeof(dis[1]));
+    // alert(dis[1].dist);
 
     //
-    for (var v in dis) {
-        alert(v);
-        alert(dis[v].toSource());
-    }
+    // for (var v in dis) {
+    //     alert("hhh");
+    //     alert(v);
+    //     alert(dis[v]);
+    // }
 
     //
     // console.log(dis);
     //alert(dis["placeDis"]);
     //console.log(dis[1][2]);
     // alert("第一个数据de"+placeDis);
-    for (var i = 0; i < 5; i++) {
-        //alert("这是数据框" + dis[i]);
-        //addd.innerHTML += dis[i];
-    }    //addd.innerHTML = "";
+    // for (var i = 0; i < 5; i++) {
+    //     //alert("这是数据框" + dis[i]);
+    //     //addd.innerHTML += dis[i];
+    // }    //addd.innerHTML = "";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
