@@ -88,6 +88,7 @@ def findCsv():
 
 @app.route("/his", methods=['POST','GET'])
 def setHistory():
+    print('haha')
     if request.method == 'POST':
         try:
             name = session['username']
