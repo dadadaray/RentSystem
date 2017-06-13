@@ -103,13 +103,13 @@ function importRentInfo() {
     Condition["vehicle"] = $(".way").val().trim()
 
     $.ajax({
-        type: 'POST',
-        url: "/his",
-        data: Condition,
-        success: function () {
-            // alert("success");
+        type:'POST',
+        url:"/his",
+        data:Condition,
+        success:function(){
+            //alert("success");
         },
-        error: function () {
+        error:function(){
             alert("fail")
         }
     })
