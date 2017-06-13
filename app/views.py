@@ -6,6 +6,7 @@ from wtforms.validators import Required
 from flask import redirect, make_response, flash
 from DB.BaseDB import BaseDB
 from DB.User import User
+from DB.Record import Record
 from DB.History import History
 import datetime
 import sys
@@ -153,7 +154,19 @@ def register():
             flash("用户名已存在！")
             return render_template('register.html')
 
-
+# @app.route("/record", methods=['POST','GET'])
+# def recordd():
+#     chooseSpace = json.loads(json.dumps(request.form.get('chooseSpace'))).encode('utf-8').decode('latin1')
+#     print(chooseSpace)
+#     try:
+#         obj1 = DB.search_Click(Record, chooseSpace)
+#         sum = obj1.click + 1
+#     except Exception as e:
+#         sum = 1
+#     print(sum)
+#     record = Record(houseLocation=chooseSpace, click=sum)
+#     DB.insert_into_table(record)
+#     return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
