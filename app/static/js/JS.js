@@ -537,6 +537,7 @@ function loadRentLocationByFile(fileName) {
            // alert("这是最新的。" + dis[2].dist);
             Sorted();
             var addd = document.getElementById("addd");
+            addd.innerHTML = ""
             addd.innerHTML = "<br><br>";
             for(var j=1;j<6;j++){
                 alert("hi");
@@ -550,7 +551,7 @@ function loadRentLocationByFile(fileName) {
 //排序函数
 function Sorted() {
 
-    alert("这是排序哦");
+    //alert("这是排序哦");
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
