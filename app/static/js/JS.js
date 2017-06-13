@@ -356,9 +356,9 @@ function loadRentLocationByFile(fileName) {
 
                             } else {
                                 if (minGpri >= minprice && maxGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
-                                    console.log(minGpri);
-                                    console.log(maxGpri);
-                                    console.log(Garea);
+                                    // console.log(minGpri);
+                                    // console.log(maxGpri);
+                                    // console.log(Garea);
                                     rent_locations.add(item.split(",")[1]);
                                 }
                             }
@@ -522,7 +522,7 @@ function loadRentLocationByFile(fileName) {
                 }
             });
             //alert("这是所有房源信息");
-            console.log(rent_locations);
+           // console.log(rent_locations);
             //console.log(rent_locations);
             //获取各个房源信息的经纬度  by  Ray
             rent_locations.forEach(function (element, index) {
@@ -545,15 +545,19 @@ function loadRentLocationByFile(fileName) {
 //排序函数
 function Sorted() {
     alert("这是排序哦");
-    console.log(dis);
+
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    // var addd = document.getElementById("addd");
-    // for (var i = 0; i < 5; i++) {
-    //     alert(dis[i].dist);
-    //     addd.innerHTML += dis[i];
-    // }    //addd.innerHTML = "";
+    var addd = document.getElementById("addd");
+
+
+    console.log(dis);
+    //alert("第一个数据de"+placeDis);
+    for (var i = 0; i < 5; i++) {
+        alert("这是数据框"+dis);
+        //addd.innerHTML += dis[i];
+    }    //addd.innerHTML = "";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
@@ -585,7 +589,7 @@ function getCity() {
         if (data['province'] && typeof data['province'] === 'string') {
             document.getElementById('info').innerHTML = (data['city'] || data['province']);
             document.getElementById("hidden").style.display = "block";
-            return data['city']
+            return data['city'];
         }
     });
 }
