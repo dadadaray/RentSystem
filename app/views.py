@@ -26,27 +26,7 @@ class NameForm(Form):
     name = StringField('What is your name',validators=[Required()])
     submit = SubmitField('Submit')
 
-# @app.route("/history")
-# def history():
-#     name = session['username']
-#     obj = DB.search_User(User, name)
-#     id = obj.id
-#     print(id)
-#     print(obj.password)
-#     obj2 = DB.search_userid(history,id)
-#     total = []
-#     for obj1 in obj2:
-#         temp = []
-#         temp.append(obj1.goalCity)
-#         temp.append(obj1.lowerPrice)
-#         temp.append(obj1.highPrice)
-#         temp.append(obj1.lowerArea)
-#         temp.append(obj1.highArea)
-#         temp.append(obj1.way)
-#         total.append(temp)
-#     resp = make_response(render_template("history.html",obj3=total))
-#     print("33333")
-#     return render_template("history.html")
+
 @app.route("/history")
 def history():
     name = session['username']

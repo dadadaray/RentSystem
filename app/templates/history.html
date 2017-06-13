@@ -15,6 +15,16 @@
     		font-size: 28px;
     		line-height: 20px;
 			}
+		.return{
+			color: #AEAEAE;
+			font-size:25px;
+			text-decoration:none;
+		}
+		.return1{
+			left:600px;
+			top:0px;
+			position:absolute;
+		}
 	</style>
 </head>
 <body>
@@ -42,8 +52,8 @@
 			</div>
 			<a href="#" class="clock"></a>
 		</div>
+		<div class="return1"><a href="http://127.0.0.1:5000"  class="return">返回</a></div>
 	</div>
-	
 	<div id="content">
 		<ul class="list">
 			{% for item in total %}
@@ -59,7 +69,7 @@
 						<div class="point"><b></b></div>
 
 						<div class="liright">
-							<div class="histt"><a href="#">目标城市：{{ item.goalCity }}   出行方式：{{item.way}}   最高价格{{item.highPrice}}</a></div>
+							<div class="histt"><a href="#">目标城市：{{ item.goalCity }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp出行方式：{{item.way}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp最高价格:{{item.highPrice}}</a></div>
 						</div>
 					</div>
 				</li>
