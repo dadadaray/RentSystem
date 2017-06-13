@@ -122,14 +122,19 @@
                 id="mian2" name="highArea" type="text" style="width:50px">
         </div>
         <label>选择通勤方式：</label>
-        <div class="control-input" id="vehi">
-            <input class="way" type="radio" name="vehicle" value="SUBWAY,BUS" onClick="takeBus(this)" checked="checked"/> 公交+地铁
+        <div class="control-input">
+            <input class="way" type="radio" name="vehicle" value="SUBWAY,BUS" onClick="takeBus(this)" checked/> 公交+地铁
             <input class="way" type="radio" name="vehicle" value="SUBWAY" onClick="takeSubway(this)"/> 地铁
         </div>
         <div class="control-input">
             <input type="submit" name="file" value="查询" onclick="importRentInfo()"/>
         </div>
         <span id="tip" style="display:none"></span>
+        <div>
+            <div id="addd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如下显示推荐路线</div>
+        </div>
+
+
     </div>
 
 </div>
