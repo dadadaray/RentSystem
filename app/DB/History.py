@@ -11,7 +11,7 @@ class History(Base):
     highPrice = Column(Integer)
     lowerArea = Column(Integer)
     highArea = Column(Integer)
-    way = Column(Integer)
+    way = Column(String(64))
     userId = Column(Integer, ForeignKey("user.id",ondelete='CASCADE', onupdate='CASCADE'))
 
     history_user = relationship("User", foreign_keys=[userId])
