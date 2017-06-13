@@ -109,21 +109,9 @@ function importRentInfo() {
             //alert("success");
         },
         error:function(){
-            //alert("fail")
-        }
-    })
-
-   /* $.ajax({
-        type:'POST',
-        url:"/record",
-        data:Condition,
-        success:function(){
-            alert("success");
-        },
-        error:function(){
             alert("fail")
         }
-    })*/
+    })
 }
 
 function workLocationSelected(e) {
