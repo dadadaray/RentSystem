@@ -165,7 +165,7 @@ class BaseDB(object):
     '''
     def search_userid(self,table_name,userid):
         try:
-            objs = self.session.query(table_name).filter(table_name.userId == userid).first()
+            objs = self.session.query(table_name).filter(table_name.userId == userid).all()
             return objs
         except Exception as e:
             print("wrong:", e)
