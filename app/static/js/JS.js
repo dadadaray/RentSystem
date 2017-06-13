@@ -516,9 +516,10 @@ function loadRentLocationByFile(fileName) {
                 addMarkerByAddress(element);
             });
             Sorted();
+            // alert("这是追加内容！");
+            document.getElementById('addd').innerHTML = "aaaa";
         }
     )
-    ;
 }
 
 //排序函数
@@ -528,8 +529,7 @@ function Sorted() {
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    // alert("这是追加内容！");
-     document.getElementsByClassName('control-entry').innerHTML = "aaaa";
+
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
