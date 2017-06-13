@@ -28,15 +28,21 @@ class NameForm(Form):
 
 @app.route("/history")
 def history():
-    name = request.cookies.get("username")
+    name = session['username']
     obj1 = DB.search_User(User, name)
     id = obj1.id
     print(id)
-    obj1 = DB.search_userid(History, id)
-    print(obj1)
-    print(obj1.id)
-
-    return render_template("index.html")
+    objs = DB.search_userid(History, id)
+    logname = None
+    try:
+        name = session['username']
+    except Exception as e:
+        name = None
+    if name != None:
+        logname = name
+        print(objs)
+        return render_template("history.html", logname=logname,total = objs)
+    return render_template("history.html")
 
 @app.route('/')
 @app.route("/index")
@@ -69,11 +75,28 @@ def setHistory():
             id1 = obj1.id
             #从json中获取表单数据
             chooseSpace =json.loads(json.dumps(request.form.get('chooseSpace'))).encode('utf-8').decode('latin1')
-            lPrice = json.loads(request.form.get('lowPrice'))
-            hPrice = json.loads(request.form.get('highPrice'))
-            lArea = json.loads(request.form.get('lowArea'))
-            hArea = json.loads(request.form.get('highArea'))
+            try:
+                lPrice = json.loads(request.form.get('lowPrice'))
+            except Exception as e:
+                lPrice = 0
+
+            try:
+                hPrice = json.loads(request.form.get('highPrice'))
+            except Exception as e:
+                hPrice = 0
+
+            try:
+                lArea = json.loads(request.form.get('lowArea'))
+            except Exception as e:
+                lArea = 0
+
+            try:
+                hArea = json.loads(request.form.get('highArea'))
+            except Exception as e:
+                hArea = 0
+
             vehicle = json.loads(json.dumps(request.form.get('vehicle')))
+
             #保存历史记录
             history = History(goalCity=chooseSpace, lowerPrice=lPrice, highPrice=hPrice, lowerArea=lArea,
                               highArea=hArea, way=vehicle, userId=id1)
@@ -154,19 +177,6 @@ def register():
             flash("用户名已存在！")
             return render_template('register.html')
 
-# @app.route("/record", methods=['POST','GET'])
-# def recordd():
-#     chooseSpace = json.loads(json.dumps(request.form.get('chooseSpace'))).encode('utf-8').decode('latin1')
-#     print(chooseSpace)
-#     try:
-#         obj1 = DB.search_Click(Record, chooseSpace)
-#         sum = obj1.click + 1
-#     except Exception as e:
-#         sum = 1
-#     print(sum)
-#     record = Record(houseLocation=chooseSpace, click=sum)
-#     DB.insert_into_table(record)
-#     return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
