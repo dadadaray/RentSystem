@@ -103,13 +103,13 @@ function importRentInfo() {
     Condition["vehicle"] = $(".way").val().trim()
 
     $.ajax({
-        type:'POST',
-        url:"/his",
-        data:Condition,
-        success:function(){
+        type: 'POST',
+        url: "/his",
+        data: Condition,
+        success: function () {
             //alert("success");
         },
-        error:function(){
+        error: function () {
             alert("fail")
         }
     })
@@ -522,7 +522,7 @@ function loadRentLocationByFile(fileName) {
                 }
             });
             //alert("这是所有房源信息");
-           // console.log(rent_locations);
+            // console.log(rent_locations);
             //console.log(rent_locations);
             //获取各个房源信息的经纬度  by  Ray
             rent_locations.forEach(function (element, index) {
@@ -551,11 +551,19 @@ function Sorted() {
     });
     var addd = document.getElementById("addd");
 
+    //
+    for (var v in dis) {
+        alert(v);
+        alert(dis[v].toSource());
+    }
 
-    console.log(dis);
-    //alert("第一个数据de"+placeDis);
+    //
+    // console.log(dis);
+    //alert(dis["placeDis"]);
+    //console.log(dis[1][2]);
+    // alert("第一个数据de"+placeDis);
     for (var i = 0; i < 5; i++) {
-        alert("这是数据框"+dis);
+        //alert("这是数据框" + dis[i]);
         //addd.innerHTML += dis[i];
     }    //addd.innerHTML = "";
 }
