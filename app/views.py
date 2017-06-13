@@ -1,11 +1,12 @@
 #-*- coding:utf-8 -*-
-from flask import Flask, render_template,url_for,request, session
+from flask import Flask, render_template,url_for,request, session,json
 from flask.ext.wtf import Form
 from wtforms import StringField,SubmitField
 from wtforms.validators import Required
 from flask import redirect, make_response, flash
 from DB.BaseDB import BaseDB
 from DB.User import User
+from DB.Record import Record
 from DB.History import History
 import datetime
 import sys
@@ -88,23 +89,25 @@ def findCsv():
 @app.route("/his", methods=['POST','GET'])
 def setHistory():
     if request.method == 'POST':
-        name = session['username']
+        try:
+            name = session['username']
+        except Exception as e:
+            name = None
+        #没登录时不存入历史记录
         if name != None:
             obj1 = DB.search_User(User, name)
             id1 = obj1.id
-            chooseSpace = request.form['chooseSpace']
-            hPrice = request.form['highPrice']
-            lPrice = request.form['lowPrice']
-            hArea = request.form['highArea']
-            lArea = request.form['lowArea']
-            vehicle = request.form['vehicle']
-
+            #从json中获取表单数据
+            chooseSpace =json.loads(json.dumps(request.form.get('chooseSpace'))).encode('utf-8').decode('latin1')
+            lPrice = json.loads(request.form.get('lowPrice'))
+            hPrice = json.loads(request.form.get('highPrice'))
+            lArea = json.loads(request.form.get('lowArea'))
+            hArea = json.loads(request.form.get('highArea'))
+            vehicle = json.loads(json.dumps(request.form.get('vehicle')))
+            #保存历史记录
             history = History(goalCity=chooseSpace, lowerPrice=lPrice, highPrice=hPrice, lowerArea=lArea,
                               highArea=hArea, way=vehicle, userId=id1)
             DB.insert_into_table(history)
-        else:
-            #没登录时待解决
-            print("没登录！")
 
     return render_template("index.html")
 
@@ -173,6 +176,7 @@ def register():
             # 验证密码和确认密码是否一致
             if password != repw:
                 flash("密码和确认密码不一致！")
+                return render_template('register.html')
             user = User(userName=username, password=password)
             DB.insert_into_table(user)
             return render_template('login.html')
@@ -180,7 +184,19 @@ def register():
             flash("用户名已存在！")
             return render_template('register.html')
 
-
+# @app.route("/record", methods=['POST','GET'])
+# def recordd():
+#     chooseSpace = json.loads(json.dumps(request.form.get('chooseSpace'))).encode('utf-8').decode('latin1')
+#     print(chooseSpace)
+#     try:
+#         obj1 = DB.search_Click(Record, chooseSpace)
+#         sum = obj1.click + 1
+#     except Exception as e:
+#         sum = 1
+#     print(sum)
+#     record = Record(houseLocation=chooseSpace, click=sum)
+#     DB.insert_into_table(record)
+#     return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
