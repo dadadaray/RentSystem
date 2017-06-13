@@ -86,7 +86,6 @@ function takeSubway(radio) {
 function importRentInfo() {
 
     var wl = document.getElementById("work-location").value;
-    //alert("初始化打印la" + price11);
     if (wl) {
         var file = "rent.csv"
         loadRentLocationByFile(file);
@@ -107,10 +106,10 @@ function importRentInfo() {
         url:"/his",
         data:Condition,
         success:function(){
-            alert("success");
+            //alert("success");
         },
         error:function(){
-            alert("fail")
+            //alert("fail")
         }
     })
 }
