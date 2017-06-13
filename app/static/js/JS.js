@@ -537,13 +537,12 @@ function loadRentLocationByFile(fileName) {
            // alert("这是最新的。" + dis[2].dist);
             Sorted();
             var addd = document.getElementById("addd");
-            addd.innerHTML = ""
-            addd.innerHTML = "<br><br>";
+            addd.innerHTML = "";
+            addd.innerHTML = "<br>";
             for(var j=1;j<6;j++){
                 alert("hi");
                 addd.innerHTML += dis[j].plase+":"+dis[j].dist + "<br>";
             }
-
         }
     )
 }
