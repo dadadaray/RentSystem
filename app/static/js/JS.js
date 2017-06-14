@@ -103,13 +103,13 @@ function importRentInfo() {
     Condition["vehicle"] = $(".way").val().trim()
 
     $.ajax({
-        type: 'POST',
-        url: "/his",
-        data: Condition,
-        success: function () {
+        type:'POST',
+        url:"/his",
+        data:Condition,
+        success:function(){
             //alert("success");
         },
-        error: function () {
+        error:function(){
             alert("fail")
         }
     })
@@ -368,9 +368,9 @@ function loadRentLocationByFile(fileName) {
 
                             } else {
                                 if (minGpri >= minprice && maxGpri <= maxprice && Garea >= minarea && Garea <= maxarea) {
-                                    console.log(minGpri);
-                                    console.log(maxGpri);
-                                    console.log(Garea);
+                                    // console.log(minGpri);
+                                    // console.log(maxGpri);
+                                    // console.log(Garea);
                                     rent_locations.add(item.split(",")[1]);
                                 }
                             }
@@ -534,7 +534,7 @@ function loadRentLocationByFile(fileName) {
                 }
             });
             //alert("这是所有房源信息");
-            console.log(rent_locations);
+            // console.log(rent_locations);
             //console.log(rent_locations);
             //获取各个房源信息的经纬度  by  Ray
             rent_locations.forEach(function (element, index) {
@@ -543,38 +543,49 @@ function loadRentLocationByFile(fileName) {
                         dis.push(new placeDis(element, workjingwei.distance(result.geocodes[0].location), result.geocodes[0].location));
                     }
                 });
-
                 //加上房源标记
                 addMarkerByAddress(element);
             });
+           // alert("这是最新的。" + dis[2].dist);
             Sorted();
-            // alert("这是追加内容！");
-
+            var addd = document.getElementById("addd");
+            addd.innerHTML = "";
+            addd.innerHTML = "<br>";
+            for(var j=1;j<6;j++){
+                //alert("hi");
+                addd.innerHTML += dis[j].plase+":"+dis[j].dist + "<br>";
+            }
         }
     )
 }
 
 //排序函数
 function Sorted() {
-    //alert("这是排序哦");
 
+    //alert("这是排序哦");
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
-    alert("dis")
-    console.log()
-    var temp = "";
-    for(var i in dis){//用javascript的for/in循环遍历对象的属性
-    temp += i+":"+dis[i]+"\n";
-    }
-    con
-    alert(temp);
 
-    // var addd = document.getElementById("addd");
-    for (var i = 0; i < 5; i++) {
-       //s alert(dis[i]);
-        //addd.innerHTML += dis[i];
-    }    //addd.innerHTML = "";
+    //alert(typeof(dis[1]));
+    // alert(dis[1].dist);
+
+    //
+    // for (var v in dis) {
+    //     alert("hhh");
+    //     alert(v);
+    //     alert(dis[v]);
+    // }
+
+    //
+    // console.log(dis);
+    //alert(dis["placeDis"]);
+    //console.log(dis[1][2]);
+    // alert("第一个数据de"+placeDis);
+    // for (var i = 0; i < 5; i++) {
+    //     //alert("这是数据框" + dis[i]);
+    //     //addd.innerHTML += dis[i];
+    // }    //addd.innerHTML = "";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
@@ -606,7 +617,7 @@ function getCity() {
         if (data['province'] && typeof data['province'] === 'string') {
             document.getElementById('info').innerHTML = (data['city'] || data['province']);
             document.getElementById("hidden").style.display = "block";
-            return data['city']
+            return data['city'];
         }
     });
 }
