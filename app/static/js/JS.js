@@ -103,11 +103,23 @@ function importRentInfo() {
     Condition["vehicle"] = $(".way").val().trim()
 
     $.ajax({
+        type: 'POST',
+        url: "/his",
+        data: Condition,
+        success: function () {
+            //alert("success");
+        },
+        error: function () {
+            alert("fail")
+        }
+    })
+    alert(Condition["chooseSpace"])
+     $.ajax({
         type:'POST',
-        url:"/his",
+        url:"/record",
         data:Condition,
         success:function(){
-            //alert("success");
+            alert("success");
         },
         error:function(){
             alert("fail")
@@ -544,16 +556,25 @@ function loadRentLocationByFile(fileName) {
 
 //排序函数
 function Sorted() {
-    alert("这是排序哦");
-    console.log(dis);
+    //alert("这是排序哦");
+
     dis.sort(function (a, b) {
         return a.dist - b.dist;
     });
+    alert("dis")
+    console.log()
+    var temp = "";
+    for(var i in dis){//用javascript的for/in循环遍历对象的属性
+    temp += i+":"+dis[i]+"\n";
+    }
+    con
+    alert(temp);
+
     // var addd = document.getElementById("addd");
-    // for (var i = 0; i < 5; i++) {
-    //     alert(dis[i].dist);
-    //     addd.innerHTML += dis[i];
-    // }    //addd.innerHTML = "";
+    for (var i = 0; i < 5; i++) {
+       //s alert(dis[i]);
+        //addd.innerHTML += dis[i];
+    }    //addd.innerHTML = "";
 }
 
 //地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件地图中添加地图操作ToolBar插件
