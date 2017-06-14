@@ -26,6 +26,28 @@ class NameForm(Form):
     name = StringField('What is your name',validators=[Required()])
     submit = SubmitField('Submit')
 
+
+@app.route("/record", methods=['POST','GET'])
+def record():
+    chooseSpace = json.loads(json.dumps(request.form.get('chooseSpace'))).encode('utf-8').decode('latin1')
+    print(chooseSpace)
+    try:
+        obj1 = DB.search_Click(Record, chooseSpace)
+        id1 = obj1.id
+        sum = obj1.click + 1
+        record = Record(id=id1, houseLocation=chooseSpace, click=sum)
+        DB.update_record(record)
+        print("更新记录成功！")
+    except Exception as e:
+        sum = 1
+        record = Record(houseLocation=chooseSpace, click=sum)
+        DB.insert_into_table(record)
+        print("插入新记录成功！")
+
+
+    return render_template("index.html")
+
+
 @app.route("/history")
 def history():
     name = session['username']
@@ -158,7 +180,7 @@ def zhuce():
 def register():
     #error = None
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].encode('utf-8').decode('latin1')
         password = request.form['password']
         repw = request.form['prePassword']
 
