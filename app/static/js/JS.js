@@ -93,7 +93,7 @@ function importRentInfo() {
     } else {
         alert("工作地点为空，请填上");
     }
-
+    document.getElementById("zuirechaxun").style.visibility = "hidden";//隐藏
     var Condition = {};
     Condition["chooseSpace"] = $("#work-location").val().trim();
     Condition["lowPrice"] = $("#price1").val().trim()
@@ -103,25 +103,25 @@ function importRentInfo() {
     Condition["vehicle"] = $(".way").val().trim()
 
     $.ajax({
-        type:'POST',
-        url:"/his",
-        data:Condition,
-        success:function(){
+        type: 'POST',
+        url: "/his",
+        data: Condition,
+        success: function () {
             //alert("success");
         },
-        error:function(){
+        error: function () {
             alert("fail")
         }
     })
     alert(Condition["chooseSpace"])
-     $.ajax({
-        type:'POST',
-        url:"/record",
-        data:Condition,
-        success:function(){
+    $.ajax({
+        type: 'POST',
+        url: "/record",
+        data: Condition,
+        success: function () {
             alert("success");
         },
-        error:function(){
+        error: function () {
             alert("fail")
         }
     })
@@ -188,7 +188,7 @@ function addMarkerByAddress(address) {
             rentMarker.on('click', function (e) {
                 //alert("隐藏了！");
                 document.getElementById("panel").style.visibility = "hidden";//隐藏
-                 document.getElementById("zuirechaxun").style.visibility = "hidden";//隐藏
+
                 //a.remove();
                 //鼠标移到标记上会显示标记content属性的内容
                 infoWindow.setContent(e.target.content);
@@ -545,16 +545,16 @@ function loadRentLocationByFile(fileName) {
                     }
                 });
                 //加上房源标记
-                addMarkerByAddress(element );
+                addMarkerByAddress(element);
             });
-           // alert("这是最新的。" + dis[2].dist);
+            // alert("这是最新的。" + dis[2].dist);
             Sorted();
             var addd = document.getElementById("addd");
             addd.innerHTML = "";
             addd.innerHTML = "<br>";
-            for(var j=1;j<6;j++){
+            for (var j = 1; j < 6; j++) {
                 //alert("hi");
-                addd.innerHTML += dis[j].plase+":"+dis[j].dist + "<br>";
+                addd.innerHTML += dis[j].plase + ":" + dis[j].dist + "<br>";
             }
         }
     )
