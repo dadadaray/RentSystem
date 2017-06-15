@@ -93,7 +93,7 @@ function importRentInfo() {
     } else {
         alert("工作地点为空，请填上");
     }
-    document.getElementById("zuirechaxun").style.visibility = "hidden";//隐藏
+    document.getElementById("zuirechaxun").style.display = "none";//隐藏
     var Condition = {};
     Condition["chooseSpace"] = $("#work-location").val().trim();
     Condition["lowPrice"] = $("#price1").val().trim()
