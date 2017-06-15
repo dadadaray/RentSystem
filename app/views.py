@@ -37,12 +37,10 @@ def record():
         sum = obj1.click + 1
         record = Record(id=id1, houseLocation=chooseSpace, click=sum)
         DB.update_record(record)
-        print("更新记录成功！")
     except Exception as e:
         sum = 1
         record = Record(houseLocation=chooseSpace, click=sum)
         DB.insert_into_table(record)
-        print("插入新记录成功！")
 
     return render_template("index.html")
 
