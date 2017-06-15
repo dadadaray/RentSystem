@@ -188,6 +188,7 @@ function addMarkerByAddress(address) {
             rentMarker.on('click', function (e) {
                 //alert("隐藏了！");
                 document.getElementById("panel").style.visibility = "hidden";//隐藏
+                 document.getElementById("zuirechaxun").style.visibility = "hidden";//隐藏
                 //a.remove();
                 //鼠标移到标记上会显示标记content属性的内容
                 infoWindow.setContent(e.target.content);
@@ -544,7 +545,7 @@ function loadRentLocationByFile(fileName) {
                     }
                 });
                 //加上房源标记
-                addMarkerByAddress(element);
+                addMarkerByAddress(element );
             });
            // alert("这是最新的。" + dis[2].dist);
             Sorted();

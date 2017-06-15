@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-   <title>毕业生租房</title>
+    <title>毕业生租房</title>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/jquery.range.css"/>
     <script src="http://cache.amap.com/lbs/static/jquery-1.9.1.js"></script>
@@ -128,6 +128,12 @@
         </div>
         <div class="control-input">
             <input type="submit" name="file" value="查询" onclick="importRentInfo()"/>
+        </div>
+        <div id="zuirechaxun">
+            <div style="text-align:center"><h3>最热查询！</h3></div>
+            {% for item in total %}
+            <div style="text-align:center"><h4>{{item}}</h4></div>
+            {% endfor %}
         </div>
         <span id="tip" style="display:none"></span>
         <div>
