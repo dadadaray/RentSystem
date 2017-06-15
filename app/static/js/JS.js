@@ -119,7 +119,7 @@ function importRentInfo() {
         url: "/record",
         data: Condition,
         success: function () {
-            alert("success");
+            //alert("success");
         },
         error: function () {
             alert("fail")
